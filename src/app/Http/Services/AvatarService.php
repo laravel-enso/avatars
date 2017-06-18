@@ -45,15 +45,6 @@ class AvatarService
         });
     }
 
-    private function checkOldAvatar()
-    {
-        $oldAvatar = Avatar::whereUserId($this->request->user()->id)->first();
-
-        if ($oldAvatar) {
-            $this->fileManager->delete($oldAvatar->saved_name);
-        }
-    }
-
     private function save(Avatar $avatar)
     {
         $attributes = array_merge(
