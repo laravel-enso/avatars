@@ -8,12 +8,12 @@ use LaravelEnso\FileManager\Classes\FileManager;
 
 class AvatarService
 {
-	private $request;
-	private $fileManager;
+    private $request;
+    private $fileManager;
 
     public function __construct(Request $request)
     {
-    	$this->request = $request;
+        $this->request = $request;
         $this->fileManager = new FileManager(config('laravel-enso.paths.avatars'), config('laravel-enso.paths.temp'));
     }
 
@@ -49,7 +49,7 @@ class AvatarService
 
     private function checkOldAvatar()
     {
-    	$oldAvatar = Avatar::whereUserId($this->request->user()->id)->first();
+        $oldAvatar = Avatar::whereUserId($this->request->user()->id)->first();
 
         if ($oldAvatar) {
             $this->fileManager->delete($oldAvatar->saved_name);
@@ -58,10 +58,10 @@ class AvatarService
 
     private function saveNewAvatar()
     {
-    	$attributes = array_merge(
-    		$this->fileManager->getUploadedFiles()->first(),
-    		['user_id' => $this->request->user()->id]
-    	);
+        $attributes = array_merge(
+            $this->fileManager->getUploadedFiles()->first(),
+            ['user_id' => $this->request->user()->id]
+        );
 
         return Avatar::create($attributes);
     }
