@@ -17,9 +17,9 @@ class AvatarController extends Controller
     }
 
     // public function store(ValidateAvatarRequest $request, Avatar $avatar) //fixme
-    public function store()
+    public function store(Avatar $avatar)
     {
-        return $this->avatars->store();
+        return $this->avatars->store($avatar);
     }
 
     public function show($id)

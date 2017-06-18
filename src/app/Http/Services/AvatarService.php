@@ -17,19 +17,6 @@ class AvatarService
         $this->fileManager = new FileManager(config('laravel-enso.paths.avatars'), config('laravel-enso.paths.temp'));
     }
 
-    public function store()
-    {
-        $avatar = null;
-
-        \DB::transaction(function () use (&$avatar) {
-            $this->fileManager->startUpload($this->request->all());
-            $avatar = $this->saveNewAvatar();
-            $this->fileManager->commitUpload();
-        });
-
-        return $avatar;
-    }
-
     public function show($avatarId)
     {
         $avatar = Avatar::find($avatarId);
@@ -37,6 +24,17 @@ class AvatarService
         return $avatar
             ? $this->fileManager->getInline($avatar->original_name, $avatar->saved_name)
             : $this->fileManager->getInline('profile.png', 'profile.png');
+    }
+
+    public function store(Avatar $avatar)
+    {
+        \DB::transaction(function () use (&$avatar) {
+            $this->fileManager->startUpload($this->request->all());
+            $avatar = $this->save($avatar);
+            $this->fileManager->commitUpload();
+        });
+
+        return $avatar;
     }
 
     public function destroy(Avatar $avatar)
@@ -56,13 +54,13 @@ class AvatarService
         }
     }
 
-    private function saveNewAvatar()
+    private function save(Avatar $avatar)
     {
         $attributes = array_merge(
             $this->fileManager->getUploadedFiles()->first(),
             ['user_id' => $this->request->user()->id]
         );
 
-        return Avatar::create($attributes);
+        return $avatar->create($attributes);
     }
 }
