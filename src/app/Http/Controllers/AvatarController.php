@@ -22,7 +22,7 @@ class AvatarController extends Controller
         return $this->avatars->store($avatar);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         return $this->avatars->show($id);
     }

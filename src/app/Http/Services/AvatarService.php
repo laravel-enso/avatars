@@ -17,9 +17,9 @@ class AvatarService
         $this->fileManager = new FileManager(config('laravel-enso.paths.avatars'), config('laravel-enso.paths.temp'));
     }
 
-    public function show($avatarId)
+    public function show(int $id)
     {
-        $avatar = Avatar::find($avatarId);
+        $avatar = Avatar::find($id);
 
         return $avatar
             ? $this->fileManager->getInline($avatar->original_name, $avatar->saved_name)
