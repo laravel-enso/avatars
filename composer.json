@@ -1,5 +1,5 @@
 {
-    "name": "laravel-enso/avatarmananger",
+    "name": "laravel-enso/avatarmanager",
     "description": "Avatar Manager depedency for Laravel Enso",
     "type": "dependency",
     "license": "MIT",
