@@ -4,7 +4,7 @@ namespace LaravelEnso\AvatarManager;
 
 use Illuminate\Support\ServiceProvider;
 
-class AvatarManagerServiceProvider extends ServiceProvider
+class AvatarServiceProvider extends ServiceProvider
 {
     public function boot()
     {
@@ -13,6 +13,7 @@ class AvatarManagerServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/storage/app' => storage_path('app'),
+            __DIR__.'/storage/app/avatars/profile.png' => storage_path('app/avatars/profile.png'),
         ], 'avatars-storage');
     }
 
