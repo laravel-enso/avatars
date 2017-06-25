@@ -22,8 +22,8 @@ class AvatarService
         $avatar = Avatar::find($id);
 
         return $avatar
-            ? $this->fileManager->getInline($avatar->original_name, $avatar->saved_name)
-            : $this->fileManager->getInline('profile.png', 'profile.png');
+            ? $this->fileManager->getInline($avatar->saved_name)
+            : $this->fileManager->getInline('profile.png');
     }
 
     public function store(Avatar $avatar)
