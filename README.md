@@ -6,9 +6,19 @@
 
 Avatar Manager dependency for Laravel Enso
 
+The package brings avatar management functionality to users of the application.
+
+## Includes 
+- migration for storing avatar related data
+- model, routes & controllers
+- a folder used to store the avatar files and a default avatar for users that do not have an avatar set
+
+## Can publish
+- `php artisan vendor:publish --tag=avatars-storage` - folder and default avatar
+
 ## Note
 
-Included in Laravel Enso Core / Coreplus packages
+Included in laravel-enso/core package
 
 ### Contributions
 
