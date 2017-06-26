@@ -6,7 +6,7 @@
 
 Avatar Manager dependency for Laravel Enso
 
-The package brings avatar management functionality to users of the application.
+The package brings avatar management functionality to the users of the application.
 
 ## Includes 
 - migration for storing avatar related data
