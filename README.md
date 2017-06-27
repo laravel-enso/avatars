@@ -13,6 +13,8 @@ Includes:
 - model, routes & controllers
 - a folder used to store the avatar files and a default avatar for users that do not have an avatar set
 
+Uses the [File Manager](https://github.com/laravel-enso/AvatarManager) package for uploading the avatar files
+
 ## Notes
 
 The [Laravel Enso Core](https://github.com/laravel-enso/Core) package comes with this package included.
