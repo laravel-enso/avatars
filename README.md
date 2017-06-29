@@ -6,6 +6,8 @@
 
 User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
 
+[![Watch the demo](https://laravel-enso.github.io/menumanager/screenshots/Selection_013.png)](https://laravel-enso.github.io/menumanager/videos/avatar_change.webm)
+
 ## Details
  
 Includes:
