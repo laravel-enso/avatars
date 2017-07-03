@@ -3,7 +3,6 @@
 namespace LaravelEnso\AvatarManager;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\ImageTransformer\ImageTransformerServiceProvider;
 
 class AvatarServiceProvider extends ServiceProvider
 {
@@ -20,6 +19,6 @@ class AvatarServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->register(ImageTransformerServiceProvider::class);
+        //
     }
 }
