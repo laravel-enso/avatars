@@ -5,11 +5,14 @@ namespace LaravelEnso\AvatarManager\app\Http\Services;
 use Illuminate\Http\Request;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 use LaravelEnso\FileManager\Classes\FileManager;
+use LaravelEnso\ImageTransformer\Classes\ImageTransformer;
 
 class AvatarService
 {
     private $request;
     private $fileManager;
+    private const ImageHeight = 250;
+    private const ImageWidth = 250;
 
     public function __construct(Request $request)
     {
@@ -28,11 +31,18 @@ class AvatarService
 
     public function store(Avatar $avatar)
     {
-        \DB::transaction(function () use (&$avatar) {
-            $this->fileManager->startUpload($this->request->all());
-            $avatar = $this->save($avatar);
-            $this->fileManager->commitUpload();
-        });
+        try {
+            \DB::transaction(function () use (&$avatar) {
+                $file = $this->request->allFiles();
+                $this->optimizeImage($file);
+                $this->fileManager->startUpload($file);
+                $avatar = $this->save($avatar);
+                $this->fileManager->commitUpload();
+            });
+        } catch (\Exception $e) {
+            $this->fileManager->deleteTempFiles();
+            throw $e;
+        }
 
         return $avatar;
     }
@@ -53,5 +63,12 @@ class AvatarService
         );
 
         return $avatar->create($attributes);
+    }
+
+    private function optimizeImage($files)
+    {
+        (new ImageTransformer($files))
+            ->resize(self::ImageWidth, self::ImageHeight)
+            ->optimize();
     }
 }
