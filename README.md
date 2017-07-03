@@ -1,4 +1,5 @@
 # Avatar Manager
+[![License](https://poser.pugx.org/laravel-enso/avatarmanager/license)](https://https://packagist.org/packages/laravel-enso/avatarmanager)
 [![StyleCI](https://styleci.io/repos/94704466/shield?branch=master)](https://styleci.io/repos/94704466)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d84efcf2530348d29f2ca573d06f7314)](https://www.codacy.com/app/laravel-enso/AvatarManager?utm_source=github.com&utm_medium=referral&utm_content=laravel-enso/AvatarManager&utm_campaign=badger)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/avatarmanager/downloads)](https://packagist.org/packages/laravel-enso/avatarmanager)
@@ -16,7 +17,7 @@ Includes:
 - model, routes & controllers
 - a folder used to store the avatar files and a default avatar for users that do not have an avatar set
 
-Uses the [File Manager](https://github.com/laravel-enso/AvatarManager) package for uploading the avatar files
+Uses the [File Manager](https://github.com/laravel-enso/AvatarManager) package for uploading the avatar files.
 
 Uses the [Image Transformer](https://github.com/laravel-enso/ImageTransformer) package for cropping and optimizing the avatar files.
 
