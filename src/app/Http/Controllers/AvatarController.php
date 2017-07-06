@@ -4,6 +4,7 @@ namespace LaravelEnso\AvatarManager\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use LaravelEnso\AvatarManager\app\Http\Requests\ValidateAvatarRequest;
 use LaravelEnso\AvatarManager\app\Http\Services\AvatarService;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 
@@ -16,8 +17,7 @@ class AvatarController extends Controller
         $this->avatars = new AvatarService($request);
     }
 
-    // public function store(ValidateAvatarRequest $request, Avatar $avatar) //fixme
-    public function store(Avatar $avatar)
+    public function store(ValidateAvatarRequest $request, Avatar $avatar)
     {
         return $this->avatars->store($avatar);
     }
@@ -29,7 +29,7 @@ class AvatarController extends Controller
 
     public function destroy(Avatar $avatar)
     {
-        $this->authorize('updateProfile', $avatar->user);
+        $this->authorize('update-profile', $avatar->user);
         $this->avatars->destroy($avatar);
     }
 }

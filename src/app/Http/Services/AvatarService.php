@@ -11,6 +11,7 @@ class AvatarService
 {
     private $request;
     private $fileManager;
+
     private const ImageHeight = 250;
     private const ImageWidth = 250;
 
