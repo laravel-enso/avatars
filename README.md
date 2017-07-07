@@ -1,4 +1,4 @@
-<!--h--> 
+<!--h-->
 # Avatar Manager
 [![StyleCI](https://styleci.io/repos/94704466/shield?branch=master)](https://styleci.io/repos/94704466)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d84efcf2530348d29f2ca573d06f7314)](https://www.codacy.com/app/laravel-enso/AvatarManager?utm_source=github.com&utm_medium=referral&utm_content=laravel-enso/AvatarManager&utm_campaign=badger)
@@ -9,11 +9,11 @@
 
 User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
 
-[![Watch the demo](https://laravel-enso.github.io/avatarmanager/screenshots/Selection_013.png)](https://laravel-enso.github.io/avatarmanager/videos/avatar_change.webm)
+[![Watch the demo](https://laravel-enso.github.io/avatarmanager/screenshots/Selection_013_thumb.png)](https://laravel-enso.github.io/avatarmanager/videos/avatar_change.webm)
 <sup>click on the photo to view a short demo in compatible browsers</sup>
 
 ## Features
- 
+
 - comes with a table migration, in order to be able to store avatar related data
 - includes model, routes & controllers
 - creates a folder used to store the avatar files and a default avatar for users that do not have an avatar set
