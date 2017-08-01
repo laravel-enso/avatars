@@ -18,7 +18,10 @@ class AvatarService
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->fileManager = new FileManager(config('laravel-enso.paths.avatars'), config('laravel-enso.paths.temp'));
+        $this->fileManager = new FileManager(
+            config('laravel-enso.paths.avatars'),
+            config('laravel-enso.paths.temp')
+        );
     }
 
     public function show($id)

@@ -12,8 +12,7 @@ class AvatarServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
 
         $this->publishes([
-            __DIR__.'/storage/app'                     => storage_path('app'),
-            __DIR__.'/storage/app/avatars/profile.png' => storage_path('app/avatars/profile.png'),
+            __DIR__.'/storage/app' => storage_path('app'),
         ], 'avatars-storage');
     }
 

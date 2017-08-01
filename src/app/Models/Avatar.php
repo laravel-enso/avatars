@@ -3,6 +3,7 @@
 namespace LaravelEnso\AvatarManager\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use LaravelEnso\Core\app\Models\User;
 
 class Avatar extends Model
 {
@@ -10,6 +11,6 @@ class Avatar extends Model
 
     public function user()
     {
-        return $this->belongsTo('LaravelEnso\Core\app\Models\User');
+        return $this->belongsTo(User::class);
     }
 }
