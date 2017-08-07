@@ -1,12 +1,10 @@
 <?php
 
-use App\Owner;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
-use LaravelEnso\FileManager\Classes\FileManager;
 use LaravelEnso\TestHelper\app\Classes\TestHelper;
 
 class AvatarTest extends TestHelper
@@ -72,5 +70,4 @@ class AvatarTest extends TestHelper
     {
         Storage::deleteDirectory('testFolder');
     }
-
 }
