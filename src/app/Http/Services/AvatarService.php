@@ -45,6 +45,7 @@ class AvatarService
             });
         } catch (\Exception $e) {
             $this->fileManager->deleteTempFiles();
+
             throw $e;
         }
 
