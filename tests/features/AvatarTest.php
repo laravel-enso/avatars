@@ -23,10 +23,11 @@ class AvatarTest extends TestHelper
     /** @test */
     public function show()
     {
-        $this->createAvatar();
+        $this->uploadAvatar();
         $avatar = Avatar::first();
 
-        $this->get('/core/avatars/'.$avatar->id)->assertStatus(200);
+        $this->get('/core/avatars/'.$avatar->id)
+            ->assertStatus(200);
 
         $this->cleanUp();
     }
@@ -34,11 +35,9 @@ class AvatarTest extends TestHelper
     /** @test */
     public function store()
     {
-        $this->json('POST', '/core/avatars/', [
-            'file' => UploadedFile::fake()->image('avatar.png'),
-        ]);
-
+        $this->uploadAvatar();
         $avatar = Avatar::first();
+
         $this->assertNotNull($avatar);
         Storage::assertExists('testFolder/'.$avatar->saved_name);
 
@@ -48,18 +47,18 @@ class AvatarTest extends TestHelper
     /** @test */
     public function destroy()
     {
-        $this->createAvatar();
+        $this->uploadAvatar();
         $avatar = Avatar::first();
 
         $this->delete('/core/avatars/'.$avatar->id);
 
-        $this->assertNull($avatar->fresh());
         Storage::assertMissing('testFolder/'.$avatar->saved_name);
+        $this->assertNull($avatar->fresh());
 
         $this->cleanUp();
     }
 
-    private function createAvatar()
+    private function uploadAvatar()
     {
         $this->json('POST', '/core/avatars/', [
                 'file' => UploadedFile::fake()->image('avatar.png'),
