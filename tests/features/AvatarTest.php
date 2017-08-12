@@ -60,7 +60,7 @@ class AvatarTest extends TestHelper
 
     private function uploadAvatar()
     {
-        $this->json('POST', '/core/avatars/', [
+        $this->post('/core/avatars/', [
                 'file' => UploadedFile::fake()->image('avatar.png'),
         ]);
     }
