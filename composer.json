@@ -20,9 +20,9 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel/framework": "5.4.*",
-        "laravel-enso/core": "^1.2",
-        "laravel-enso/imagetransformer": "^1.2"
+        "laravel/framework": "5.5.*",
+        "laravel-enso/core": "^1.3",
+        "laravel-enso/imagetransformer": "^1.3"
     },
     "autoload": {
         "psr-4": {
