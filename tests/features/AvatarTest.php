@@ -16,7 +16,7 @@ class AvatarTest extends TestHelper
         parent::setUp();
 
         // $this->disableExceptionHandling();
-        config()->set('laravel-enso.paths.avatars', 'testFolder');
+        config()->set('enso.config.paths.avatars', 'testFolder');
         $this->signIn(User::first());
     }
 

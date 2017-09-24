@@ -9,18 +9,16 @@ use LaravelEnso\ImageTransformer\Classes\ImageTransformer;
 
 class AvatarService
 {
-    private $request;
     private $fileManager;
 
     private const ImageHeight = 250;
     private const ImageWidth = 250;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request;
         $this->fileManager = new FileManager(
-            config('laravel-enso.paths.avatars'),
-            config('laravel-enso.paths.temp')
+            config('enso.config.paths.avatars'),
+            config('enso.config.paths.temp')
         );
     }
 
@@ -33,11 +31,11 @@ class AvatarService
             : $this->fileManager->getInline('profile.png');
     }
 
-    public function store(Avatar $avatar)
+    public function store(Request $request, Avatar $avatar)
     {
         try {
-            \DB::transaction(function () use (&$avatar) {
-                $file = $this->request->allFiles();
+            \DB::transaction(function () use ($request, &$avatar) {
+                $file = $request->allFiles();
                 $this->optimizeImage($file);
                 $this->fileManager->startUpload($file);
                 $avatar = $this->save($avatar);
@@ -64,13 +62,13 @@ class AvatarService
     {
         $attributes = array_merge(
             $this->fileManager->getUploadedFiles()->first(),
-            ['user_id' => $this->request->user()->id]
+            ['user_id' => request()->user()->id]
         );
 
         return $avatar->create($attributes);
     }
 
-    private function optimizeImage($files)
+    private function optimizeImage(array $files)
     {
         (new ImageTransformer($files))
             ->resize(self::ImageWidth, self::ImageHeight)
