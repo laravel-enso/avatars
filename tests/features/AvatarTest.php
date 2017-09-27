@@ -27,7 +27,7 @@ class AvatarTest extends TestCase
         $this->uploadAvatar();
         $avatar = Avatar::first();
 
-        $this->get('/core/avatars/' . $avatar->id)
+        $this->get('/core/avatars/'.$avatar->id)
             ->assertStatus(200);
 
         $this->cleanUp();
@@ -40,7 +40,7 @@ class AvatarTest extends TestCase
         $avatar = Avatar::first();
 
         $this->assertNotNull($avatar);
-        Storage::assertExists('testFolder/' . $avatar->saved_name);
+        Storage::assertExists('testFolder/'.$avatar->saved_name);
 
         $this->cleanUp();
     }
@@ -51,9 +51,9 @@ class AvatarTest extends TestCase
         $this->uploadAvatar();
         $avatar = Avatar::first();
 
-        $this->delete('/core/avatars/' . $avatar->id);
+        $this->delete('/core/avatars/'.$avatar->id);
 
-        Storage::assertMissing('testFolder/' . $avatar->saved_name);
+        Storage::assertMissing('testFolder/'.$avatar->saved_name);
         $this->assertNull($avatar->fresh());
 
         $this->cleanUp();
