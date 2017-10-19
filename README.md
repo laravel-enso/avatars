@@ -17,7 +17,7 @@ User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-ens
 - comes with a table migration, in order to be able to store avatar related data
 - includes model, routes & controllers
 - creates a folder used to store the avatar files and a default avatar for users that do not have an avatar set
-- uses the [File Manager](https://github.com/laravel-enso/AvatarManager) package for uploading the avatar files.
+- uses the [File Manager](https://github.com/laravel-enso/FileManage) package for uploading the avatar files.
 - uses the [Image Transformer](https://github.com/laravel-enso/ImageTransformer) package for cropping and optimizing the avatar files.
 
 ## Publishes
