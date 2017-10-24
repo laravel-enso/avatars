@@ -10,7 +10,7 @@
 
 User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
 
-[![Watch the demo](https://laravel-enso.github.io/avatarmanager/screenshots/Selection_013_thumb.png)](https://laravel-enso.github.io/avatarmanager/videos/avatar_change.webm)
+[![Watch the demo](https://laravel-enso.github.io/avatarmanager/screenshots/bulma_cap001_thumb.png)](https://laravel-enso.github.io/avatarmanager/videos/bulma_avatar_change.webm)
 <sup>click on the photo to view a short demo in compatible browsers</sup>
 
 ## Features
