@@ -2,8 +2,8 @@
 
 namespace LaravelEnso\AvatarManager\app\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\Core\app\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Avatar extends Model
 {
