@@ -9,26 +9,20 @@ use LaravelEnso\AvatarManager\app\Http\Requests\ValidateAvatarRequest;
 
 class AvatarController extends Controller
 {
-    private $service;
-
-    public function __construct(AvatarService $service)
+    public function store(ValidateAvatarRequest $request, Avatar $avatar, AvatarService $service)
     {
-        $this->service = $service;
+        return $service->store($request, $avatar);
     }
 
-    public function store(ValidateAvatarRequest $request, Avatar $avatar)
+    public function show($id, AvatarService $service)
     {
-        return $this->service->store($request, $avatar);
+        return $service->show($id);
     }
 
-    public function show($id)
+    public function destroy(Avatar $avatar, AvatarService $service)
     {
-        return $this->service->show($id);
-    }
+        $this->authorize('destroy-avatar', $avatar->user);
 
-    public function destroy(Avatar $avatar)
-    {
-        $this->authorize('update-profile', $avatar->user);
-        $this->service->destroy($avatar);
+        $service->destroy($avatar);
     }
 }

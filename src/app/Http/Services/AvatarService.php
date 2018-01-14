@@ -4,22 +4,20 @@ namespace LaravelEnso\AvatarManager\app\Http\Services;
 
 use Illuminate\Http\Request;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
-use LaravelEnso\FileManager\Classes\FileManager;
+use LaravelEnso\FileManager\app\Classes\FileManager;
 use LaravelEnso\ImageTransformer\Classes\ImageTransformer;
 
 class AvatarService
 {
     private $fileManager;
 
+    private const DefaultAvatar = 'profile.png';
     private const ImageHeight = 250;
     private const ImageWidth = 250;
 
     public function __construct()
     {
-        $this->fileManager = new FileManager(
-            config('enso.config.paths.avatars'),
-            config('enso.config.paths.temp')
-        );
+        $this->fileManager = new FileManager(config('enso.config.paths.avatars'));
     }
 
     public function show($id)
@@ -28,23 +26,30 @@ class AvatarService
 
         return $avatar
             ? $this->fileManager->getInline($avatar->saved_name)
-            : $this->fileManager->getInline('profile.png');
+            : $this->fileManager->getInline(self::DefaultAvatar);
     }
 
     public function store(Request $request, Avatar $avatar)
     {
+        $this->fileManager->tempPath(config('enso.config.paths.temp'));
+
         try {
             \DB::transaction(function () use ($request, &$avatar) {
                 $file = $request->allFiles();
                 $this->optimizeImage($file);
                 $this->fileManager->startUpload($file);
-                $avatar = $this->save($avatar);
+
+                $avatar = $avatar->create(
+                    $this->fileManager->uploadedFiles()->first() +
+                    ['user_id' => $request->user()->id]
+                );
+
                 $this->fileManager->commitUpload();
             });
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $this->fileManager->deleteTempFiles();
 
-            throw $e;
+            throw $exception;
         }
 
         return $avatar;
@@ -56,16 +61,6 @@ class AvatarService
             $avatar->delete();
             $this->fileManager->delete($avatar->saved_name);
         });
-    }
-
-    private function save(Avatar $avatar)
-    {
-        $attributes = array_merge(
-            $this->fileManager->getUploadedFiles()->first(),
-            ['user_id' => request()->user()->id]
-        );
-
-        return $avatar->create($attributes);
     }
 
     private function optimizeImage(array $files)
