@@ -10,6 +10,8 @@ use LaravelEnso\AvatarManager\app\Classes\Presenter;
 
 class Avatar extends Model
 {
+    private const DefaultAvatar = 'profile.png';
+
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
 
     public function user()
@@ -19,7 +21,12 @@ class Avatar extends Model
 
     public static function show($id)
     {
-        return (new Presenter(self::find($id)))->show();
+        $avatar = self::find($id);
+        $image = $avatar
+            ? $avatar->saved_name
+            : self::DefaultAvatar;
+
+        return (new Presenter($image))->show();
     }
 
     public function store(array $files)

@@ -2,25 +2,19 @@
 
 namespace LaravelEnso\AvatarManager\app\Classes;
 
-use LaravelEnso\AvatarManager\app\Models\Avatar;
-
 class Presenter extends Handler
 {
-    private const DefaultAvatar = 'profile.png';
+    private $image;
 
-    private $avatar;
-
-    public function __construct(Avatar $avatar = null)
+    public function __construct(string $image)
     {
         parent::__construct();
 
-        $this->avatar = $avatar;
+        $this->image = $image;
     }
 
     public function show()
     {
-        return $this->avatar
-            ? $this->fileManager->getInline($this->avatar->saved_name)
-            : $this->fileManager->getInline(self::DefaultAvatar);
+        return $this->fileManager->getInline($this->image);
     }
 }
