@@ -16,7 +16,7 @@ class AvatarTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         config()->set('enso.config.paths.avatars', 'testFolder');
         $this->signIn(User::first());
     }
