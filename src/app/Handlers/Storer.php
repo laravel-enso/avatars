@@ -11,6 +11,7 @@ class Storer extends Handler
     private const ImageWidth = 250;
 
     private $file;
+    private $avatar;
 
     public function __construct(array $file)
     {
