@@ -23,6 +23,6 @@ class Presenter extends Handler
 
     public function show()
     {
-        return $this->fileManager->getInline($this->image);
+        return $this->fileManager->inline($this->image);
     }
 }
