@@ -10,15 +10,15 @@ class Storer extends Handler
     private const ImageHeight = 250;
     private const ImageWidth = 250;
 
-    private $file;
+    private $avatar;
 
-    public function __construct(array $file)
+    public function __construct(array $avatar)
     {
         parent::__construct();
 
         $this->fileManager->tempPath(config('enso.config.paths.temp'));
 
-        $this->file = $file;
+        $this->avatar = $avatar;
     }
 
     public function run()
@@ -28,12 +28,12 @@ class Storer extends Handler
         try {
             \DB::transaction(function () use (&$avatar) {
                 $this->processImage();
-                $this->fileManager->startUpload($this->file);
+                $this->fileManager->startUpload($this->avatar);
                 $avatar = $this->store();
                 $this->fileManager->commitUpload();
             });
         } catch (\Exception $exception) {
-            // $this->fileManager->deleteTempFiles();
+            $this->fileManager->deleteTempFiles();
             throw $exception;
         }
 
@@ -50,7 +50,7 @@ class Storer extends Handler
 
     private function processImage()
     {
-        (new ImageTransformer(collect($this->file)->first()))
+        (new ImageTransformer(collect($this->avatar)->first()))
             ->resize(self::ImageWidth, self::ImageHeight)
             ->optimize();
     }
