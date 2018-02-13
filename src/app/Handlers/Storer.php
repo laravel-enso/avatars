@@ -3,7 +3,7 @@
 namespace LaravelEnso\AvatarManager\app\Handlers;
 
 use LaravelEnso\AvatarManager\app\Models\Avatar;
-use LaravelEnso\ImageTransformer\Classes\ImageTransformer;
+use LaravelEnso\ImageTransformer\app\Classes\ImageTransformer;
 
 class Storer extends Handler
 {
@@ -11,7 +11,6 @@ class Storer extends Handler
     private const ImageWidth = 250;
 
     private $file;
-    private $avatar;
 
     public function __construct(array $file)
     {
@@ -24,24 +23,21 @@ class Storer extends Handler
 
     public function run()
     {
-        $this->upload();
+        $avatar = null;
 
-        return $this->avatar;
-    }
-
-    private function upload()
-    {
         try {
-            \DB::transaction(function () {
-                $this->optimizeImage($this->file);
+            \DB::transaction(function () use (&$avatar) {
+                $this->processImage();
                 $this->fileManager->startUpload($this->file);
-                $this->avatar = $this->store();
+                $avatar = $this->store();
                 $this->fileManager->commitUpload();
             });
         } catch (\Exception $exception) {
-            $this->fileManager->deleteTempFiles();
+            // $this->fileManager->deleteTempFiles();
             throw $exception;
         }
+
+        return $avatar;
     }
 
     private function store()
@@ -52,9 +48,9 @@ class Storer extends Handler
         );
     }
 
-    private function optimizeImage()
+    private function processImage()
     {
-        (new ImageTransformer($this->file))
+        (new ImageTransformer(collect($this->file)->first()))
             ->resize(self::ImageWidth, self::ImageHeight)
             ->optimize();
     }
