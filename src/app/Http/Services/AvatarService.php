@@ -5,7 +5,7 @@ namespace LaravelEnso\AvatarManager\app\Http\Services;
 use Illuminate\Http\Request;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 use LaravelEnso\FileManager\Classes\FileManager;
-use LaravelEnso\ImageTransformer\Classes\ImageTransformer;
+use LaravelEnso\ImageTransformer\app\Classes\ImageTransformer;
 
 class AvatarService
 {
