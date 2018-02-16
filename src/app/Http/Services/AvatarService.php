@@ -72,7 +72,7 @@ class AvatarService
 
     private function optimizeImage($files)
     {
-        (new ImageTransformer($files))
+        (new ImageTransformer(collect($files)->first()))
             ->resize(self::ImageWidth, self::ImageHeight)
             ->optimize();
     }
