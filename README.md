@@ -3,7 +3,7 @@
 
 [![StyleCI](https://styleci.io/repos/94704466/shield?branch=master)](https://styleci.io/repos/94704466)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d84efcf2530348d29f2ca573d06f7314)](https://www.codacy.com/app/laravel-enso/AvatarManager?utm_source=github.com&utm_medium=referral&utm_content=laravel-enso/AvatarManager&utm_campaign=badger)
-[![License](https://poser.pugx.org/laravel-enso/avatarmanager/license)](https://https://packagist.org/packages/laravel-enso/avatarmanager)
+[![License](https://poser.pugx.org/laravel-enso/avatarmanager/license)](https://packagist.org/packages/laravel-enso/avatarmanager)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/avatarmanager/downloads)](https://packagist.org/packages/laravel-enso/avatarmanager)
 [![Latest Stable Version](https://poser.pugx.org/laravel-enso/avatarmanager/version)](https://packagist.org/packages/laravel-enso/avatarmanager)
 <!--/h-->
