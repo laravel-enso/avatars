@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Handlers;
+namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 
@@ -23,6 +23,7 @@ class Presenter extends Handler
 
     public function show()
     {
-        return $this->fileManager->inline($this->image);
+        return $this->fileManager
+            ->inline($this->image);
     }
 }

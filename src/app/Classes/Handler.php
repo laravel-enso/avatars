@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Handlers;
+namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\FileManager\app\Classes\FileManager;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Handlers;
+namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 use LaravelEnso\ImageTransformer\app\Classes\ImageTransformer;

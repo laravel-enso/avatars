@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Handlers;
+namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 
@@ -17,9 +17,7 @@ class Destroyer extends Handler
 
     public function run()
     {
-        \DB::transaction(function () {
-            $this->avatar->delete();
-            $this->fileManager->delete($this->avatar->saved_name);
-        });
+        $this->fileManager
+            ->delete($this->avatar->saved_name);
     }
 }
