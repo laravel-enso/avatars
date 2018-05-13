@@ -17,7 +17,7 @@ class Avatar extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function show(int $id)
+    public static function show($id)
     {
         return (new Presenter($id))
             ->show();
