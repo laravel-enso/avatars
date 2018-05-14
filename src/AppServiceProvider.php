@@ -3,6 +3,8 @@
 namespace LaravelEnso\AvatarManager;
 
 use Illuminate\Support\ServiceProvider;
+use LaravelEnso\AvatarManager\app\Models\Avatar;
+use LaravelEnso\AvatarManager\app\Observers\AvatarObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/storage/app' => storage_path('app'),
         ], 'avatars-storage');
+
+        Avatar::observe(AvatarObserver::class);
     }
 
     public function register()

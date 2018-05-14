@@ -5,7 +5,6 @@ namespace LaravelEnso\AvatarManager\app\Models;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\AvatarManager\app\Classes\Storer;
-use LaravelEnso\AvatarManager\app\Classes\Destroyer;
 use LaravelEnso\AvatarManager\app\Classes\Presenter;
 
 class Avatar extends Model
@@ -27,13 +26,5 @@ class Avatar extends Model
     {
         return (new Storer($request))
             ->run();
-    }
-
-    public function delete()
-    {
-        (new Destroyer($this))
-            ->run();
-
-        parent::delete();
     }
 }
