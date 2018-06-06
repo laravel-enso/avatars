@@ -10,14 +10,14 @@ class AvatarPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user, $ability)
+    public function before($user)
     {
         if ($user->isAdmin()) {
             return true;
         }
     }
 
-    public function create(User $user, Avatar $avatar)
+    public function create(User $user)
     {
         return !$user->isImpersonating();
     }
