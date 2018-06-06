@@ -10,7 +10,7 @@ class Presenter extends Handler
 
     private $image;
 
-    public function __construct(int $avatarId)
+    public function __construct($avatarId)
     {
         parent::__construct();
 
