@@ -10,11 +10,11 @@ class Presenter extends Handler
 
     private $image;
 
-    public function __construct($id)
+    public function __construct(int $avatarId)
     {
         parent::__construct();
 
-        $avatar = Avatar::find($id);
+        $avatar = Avatar::find($avatarId);
 
         $this->image = $avatar
             ? $avatar->saved_name

@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\AvatarManager\app\Classes;
 
+use LaravelEnso\Core\app\Models\User;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 use LaravelEnso\ImageTransformer\app\Classes\ImageTransformer;
 
@@ -10,14 +11,18 @@ class Storer extends Handler
     private const ImageHeight = 250;
     private const ImageWidth = 250;
 
+    private $user;
     private $avatar;
 
-    public function __construct(array $avatar)
+    public function __construct(User $user, array $avatar)
     {
         parent::__construct();
 
-        $this->fileManager->tempPath(config('enso.config.paths.temp'));
+        $this->fileManager->tempPath(
+            config('enso.config.paths.temp')
+        );
 
+        $this->user = $user;
         $this->avatar = $avatar;
     }
 
@@ -44,7 +49,7 @@ class Storer extends Handler
     {
         return Avatar::create(
             $this->fileManager->uploadedFiles()->first() +
-            ['user_id' => auth()->user()->id]
+            ['user_id' => $this->user->id]
         );
     }
 

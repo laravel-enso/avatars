@@ -22,9 +22,9 @@ class Avatar extends Model
             ->show();
     }
 
-    public static function store(array $request)
+    public static function store(User $user, array $request)
     {
-        return (new Storer($request))
+        return (new Storer($user, $request))
             ->run();
     }
 }

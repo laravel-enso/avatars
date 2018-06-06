@@ -10,7 +10,12 @@ class AvatarController extends Controller
 {
     public function store(ValidateAvatarRequest $request, Avatar $avatar)
     {
-        return Avatar::store($request->allFiles());
+        $this->authorize('create', $avatar);
+
+        return Avatar::store(
+            $request->user(),
+            $request->allFiles()
+        );
     }
 
     public function show($id)
@@ -20,7 +25,7 @@ class AvatarController extends Controller
 
     public function destroy(Avatar $avatar)
     {
-        $this->authorize('destroy-avatar', $avatar->user);
+        $this->authorize('destroy', $avatar);
 
         $avatar->delete();
     }

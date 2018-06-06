@@ -10,6 +10,8 @@ abstract class Handler
 
     public function __construct()
     {
-        $this->fileManager = new FileManager(config('enso.config.paths.avatars'));
+        $this->fileManager = new FileManager(
+            config('enso.config.paths.avatars')
+        );
     }
 }
