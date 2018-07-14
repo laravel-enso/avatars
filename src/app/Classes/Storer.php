@@ -32,6 +32,7 @@ class Storer extends Handler
 
         try {
             \DB::transaction(function () use (&$avatar) {
+                $this->user->avatar->delete();
                 $this->processImage();
                 $this->fileManager->startUpload($this->avatar);
                 $avatar = $this->store();
