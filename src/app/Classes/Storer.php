@@ -8,8 +8,8 @@ use LaravelEnso\ImageTransformer\app\Classes\ImageTransformer;
 
 class Storer extends Handler
 {
-    private const ImageHeight = 250;
-    private const ImageWidth = 250;
+    const ImageHeight = 250;
+    const ImageWidth = 250;
 
     private $user;
     private $avatar;

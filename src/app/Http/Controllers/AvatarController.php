@@ -27,6 +27,9 @@ class AvatarController extends Controller
     {
         $this->authorize('destroy', $avatar);
 
+        $user = $avatar->user;
         $avatar->delete();
+
+        return $user->avatarId;
     }
 }
