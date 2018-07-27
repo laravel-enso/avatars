@@ -1,4 +1,3 @@
-<!--h-->
 # Avatar Manager
 
 [![StyleCI](https://styleci.io/repos/94704466/shield?branch=master)](https://styleci.io/repos/94704466)
@@ -6,7 +5,6 @@
 [![License](https://poser.pugx.org/laravel-enso/avatarmanager/license)](https://packagist.org/packages/laravel-enso/avatarmanager)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/avatarmanager/downloads)](https://packagist.org/packages/laravel-enso/avatarmanager)
 [![Latest Stable Version](https://poser.pugx.org/laravel-enso/avatarmanager/version)](https://packagist.org/packages/laravel-enso/avatarmanager)
-<!--/h-->
 
 User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
 
@@ -20,31 +18,12 @@ User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-ens
 - creates a folder used to store the avatar files and a default avatar for users that do not have an avatar set
 - uses the [File Manager](https://github.com/laravel-enso/FileManager) package for uploading the avatar files
 - uses the [Image Transformer](https://github.com/laravel-enso/ImageTransformer) package for cropping and optimizing the avatar files
+- uses the [Laravolt Avatar](https://github.com/laravolt/avatar) for generating avatars from user names
 
-### Notes on usage
+### Configuration & Usage
 
-Since this package is using image processing libraries and these underlying libraries may use a lot of memory, 
-especially if the processed files are large (for example, for an 8MB image file, more than 128MB of memory might be used ),
-make sure to configure php accordingly and/or do `ini_set(‘memory_limit’, ‘256M’);`   
+Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/packages/avatar-manager.html)
 
-Failure to do so may result in silent errors if alloted memory is insufficient.
-
-### Publishes
-
-- `php artisan vendor:publish --tag=avatars-storage` - storage folder and default avatar
-
-### Notes
-
-The [Laravel Enso](https://github.com/laravel-enso/Enso) package comes with this package included.
-
-Depends on:
- - [Core](https://github.com/laravel-enso/Core) for middleware and user model 
- - [ImageTransformer](https://github.com/laravel-enso/ImageTransformer) for the optimization of avatar images
- - [FileManager](https://github.com/laravel-enso/FileManager) for managing the image files
- - [Structure manager](https://github.com/laravel-enso/StructureManager) for the migrations
-
-
-<!--h-->
 ### Contributions
 
 are welcome. Pull requests are great, but issues are good too.
@@ -52,4 +31,3 @@ are welcome. Pull requests are great, but issues are good too.
 ### License
 
 This package is released under the MIT license.
-<!--/h-->
