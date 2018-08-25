@@ -8,28 +8,26 @@ use LaravelEnso\AvatarManager\app\Http\Requests\ValidateAvatarRequest;
 
 class AvatarController extends Controller
 {
-    public function store(ValidateAvatarRequest $request, Avatar $avatar)
+    public function store(ValidateAvatarRequest $request)
     {
-        $this->authorize('create', $avatar);
+        $avatar = auth()->user()->avatar;
 
-        return Avatar::store(
-            $request->user(),
-            $request->allFiles()
-        );
+        $this->authorize('store', $avatar);
+
+        return $avatar->store($request->file('avatar'));
     }
 
-    public function show($id)
+    public function show(Avatar $avatar)
     {
-        return Avatar::show($id);
+        return $avatar->inline();
     }
 
-    public function destroy(Avatar $avatar)
+    public function update(Avatar $avatar)
     {
-        $this->authorize('destroy', $avatar);
+        $this->authorize('update', $avatar);
 
-        $user = $avatar->user;
-        $avatar->delete();
+        $avatar = auth()->user()->generateAvatar();
 
-        return $user->avatarId;
+        return ['avatarId' => $avatar->id];
     }
 }

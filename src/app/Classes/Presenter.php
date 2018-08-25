@@ -6,24 +6,18 @@ use LaravelEnso\AvatarManager\app\Models\Avatar;
 
 class Presenter extends Handler
 {
-    private const DefaultAvatar = 'profile.png';
-
-    private $image;
+    private $avatar;
 
     public function __construct($avatarId)
     {
         parent::__construct();
 
-        $avatar = Avatar::find($avatarId);
-
-        $this->image = $avatar
-            ? $avatar->saved_name
-            : self::DefaultAvatar;
+        $this->avatar = Avatar::find($avatarId);
     }
 
     public function show()
     {
         return $this->fileManager
-            ->inline($this->image);
+            ->inline($this->avatar->saved_name);
     }
 }

@@ -17,12 +17,12 @@ class AvatarPolicy
         }
     }
 
-    public function create(User $user)
+    public function store(User $user)
     {
         return !$user->isImpersonating();
     }
 
-    public function destroy(User $user, Avatar $avatar)
+    public function update(User $user, Avatar $avatar)
     {
         return !$user->isImpersonating()
             && $user->id === $avatar->user_id;

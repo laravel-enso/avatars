@@ -3,7 +3,6 @@
 namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\Core\app\Models\User;
-use LaravelEnso\AvatarManager\app\Models\Avatar;
 
 class DefaultAvatar
 {
@@ -12,6 +11,7 @@ class DefaultAvatar
     private const FontSize = 128;
 
     private $user;
+    private $avatar;
 
     public function __construct(User $user)
     {
@@ -22,11 +22,19 @@ class DefaultAvatar
     {
         $this->generate();
 
-        return Avatar::create([
-            'user_id' => $this->user->id,
-            'original_name' => $this->filename().self::Extension,
-            'saved_name' => $this->hash().self::Extension,
-        ]);
+        \DB::transaction(function () {
+            $this->avatar = $this->user->avatar()
+                ->firstOrcreate(['user_id' => $this->user->id]);
+
+            $this->avatar->file()->create([
+                'original_name' => $this->filename(),
+                'saved_name' => $this->hashName(),
+                'size' => \File::size($this->savePath()),
+                'mime_type' => \File::mimeType($this->savePath())
+            ]);
+        });
+
+        return $this->avatar;
     }
 
     private function generate()
@@ -36,25 +44,25 @@ class DefaultAvatar
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->getImageObject()
-            ->save($this->path($this->hash()));
+            ->save($this->savePath());
     }
 
-    private function hash()
+    private function hashName()
     {
-        return $this->hash
-            ?? $this->hash = uniqid($this->filename());
+        return $this->hashName
+            ?? $this->hashName = uniqid(self::Filename.$this->user->id).self::Extension;
     }
 
     private function filename()
     {
-        return self::Filename.$this->user->id;
+        return self::Filename.$this->user->id.self::Extension;
     }
 
-    private function path()
+    private function savePath()
     {
         return storage_path(
             'app/'.config('enso.config.paths.avatars').'/'
-            .$this->hash().self::Extension
+            .$this->hashName()
         );
     }
 

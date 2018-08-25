@@ -5,6 +5,6 @@ Route::middleware(['web', 'auth', 'core'])
     ->prefix('api/core')->as('core.')
     ->group(function () {
         Route::resource('avatars', 'AvatarController', [
-            'only' => ['show', 'store', 'destroy'],
+            'only' => ['show', 'store', 'update'],
         ]);
     });
