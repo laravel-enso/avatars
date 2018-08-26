@@ -3,6 +3,8 @@
 namespace LaravelEnso\AvatarManager\app\Classes;
 
 use LaravelEnso\Core\app\Models\User;
+use LaravelEnso\AvatarManager\app\Models\Avatar;
+use LaravelEnso\FileManager\app\Classes\FileManager;
 
 class DefaultAvatar
 {
@@ -40,7 +42,7 @@ class DefaultAvatar
     private function generate()
     {
         \Avatar::create($this->user->fullName)
-            ->setDimension(Storer::ImageWidth, Storer::ImageHeight)
+            ->setDimension(Avatar::ImageWidth, Avatar::ImageHeight)
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->getImageObject()
@@ -60,10 +62,15 @@ class DefaultAvatar
 
     private function savePath()
     {
-        return storage_path(
-            'app/'.config('enso.config.paths.avatars').'/'
-            .$this->hashName()
-        );
+        $folder = app()->environment() === 'testing'
+            ? FileManager::TestingFolder
+            : config('enso.config.paths.avatars');
+
+        if (!\Storage::has($folder)) {
+            \Storage::makeDirectory($folder);
+        }
+
+        return storage_path('app/'.$folder.'/'.$this->hashName());
     }
 
     private function background()

@@ -15,12 +15,11 @@ class Avatar extends Model implements Attachable
     const ImageWidth = 250;
     const ImageHeight = 250;
 
-    protected $fillable = ['user_id', 'original_name', 'saved_name'];
-
-    protected $folder = 'avatars';
     protected $optimizeImages = true;
     protected $resizeImages = [self::ImageWidth, self::ImageHeight];
     protected $mimeTypes = ['image/png', 'image/jpg'];
+
+    protected $fillable = ['user_id', 'original_name', 'saved_name'];
 
     public function user()
     {
@@ -29,12 +28,21 @@ class Avatar extends Model implements Attachable
 
     public function store(UploadedFile $file)
     {
-        $this->delete();
+        $avatar = null;
 
-        $avatar = Avatar::create(['user_id' => auth()->user()->id]);
+        \DB::transaction(function () use (&$avatar, $file) {
+            $this->delete();
 
-        $avatar->upload($file);
+            $avatar = Avatar::create(['user_id' => auth()->user()->id]);
+
+            $avatar->upload($file);
+        });
 
         return $avatar;
+    }
+
+    public function folder()
+    {
+        return config('enso.paths.avatars');
     }
 }

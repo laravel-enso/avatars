@@ -10,9 +10,9 @@ class AvatarController extends Controller
 {
     public function store(ValidateAvatarRequest $request)
     {
-        $avatar = auth()->user()->avatar;
+        $avatar = $request->user()->avatar;
 
-        $this->authorize('store', $avatar);
+        $this->authorize('update', $avatar);
 
         return $avatar->store($request->file('avatar'));
     }

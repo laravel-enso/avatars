@@ -17,11 +17,6 @@ class AvatarPolicy
         }
     }
 
-    public function store(User $user)
-    {
-        return !$user->isImpersonating();
-    }
-
     public function update(User $user, Avatar $avatar)
     {
         return !$user->isImpersonating()
