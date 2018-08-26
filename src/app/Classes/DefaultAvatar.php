@@ -32,7 +32,7 @@ class DefaultAvatar
                 'original_name' => $this->filename(),
                 'saved_name' => $this->hashName(),
                 'size' => \File::size($this->savePath()),
-                'mime_type' => \File::mimeType($this->savePath())
+                'mime_type' => \File::mimeType($this->savePath()),
             ]);
         });
 
