@@ -43,6 +43,6 @@ class Avatar extends Model implements Attachable
 
     public function folder()
     {
-        return config('enso.paths.avatars');
+        return config('enso.config.paths.avatars');
     }
 }
