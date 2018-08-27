@@ -12,6 +12,10 @@ trait HasAvatar
         self::created(function ($model) {
             $model->generateAvatar();
         });
+
+        self::deleting(function ($model) {
+            $model->avatar->delete();
+        });
     }
 
     public function avatar()
@@ -19,21 +23,12 @@ trait HasAvatar
         return $this->hasOne(Avatar::class);
     }
 
-    public function getAvatarIdAttribute()
-    {
-        $avatar = $this->avatar
-            ?? $this->generateAvatar();
-
-        unset($this->avatar);
-
-        return $avatar->id;
-    }
-
     public function generateAvatar()
     {
         optional($this->avatar)->delete();
 
-        return (new DefaultAvatar($this))
-            ->create();
+        (new DefaultAvatar($this))->create();
+
+        $this->load('avatar');
     }
 }

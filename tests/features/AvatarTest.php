@@ -29,7 +29,7 @@ class AvatarTest extends TestCase
     /** @test */
     public function show()
     {
-        $this->get('/core/avatars/'.$this->user->avatarId)
+        $this->get('/core/avatars/'.$this->user->avatar->id)
             ->assertStatus(200);
 
         $this->cleanUp();
@@ -38,19 +38,19 @@ class AvatarTest extends TestCase
     /** @test */
     public function update()
     {
-        $this->user->load('avatar');
+        $this->user->load('avatar.file');
+
+        $oldAvatar = $this->user->avatar;
 
         $this->patch(route('core.avatars.update', $this->user->avatar->id, false));
 
         Storage::assertMissing(
-            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
+            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$oldAvatar->file->saved_name
         );
 
-        $this->assertNull($this->user->avatar->fresh());
+        $this->assertNotNull($this->user->avatar->fresh());
 
-        unset($this->user->avatar);
-
-        $this->assertNotNull($this->user->avatar);
+        $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
 
         Storage::assertExists(
             FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name

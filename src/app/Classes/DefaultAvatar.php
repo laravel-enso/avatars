@@ -27,13 +27,7 @@ class DefaultAvatar
         \DB::transaction(function () {
             $this->avatar = $this->user->avatar()
                 ->firstOrcreate(['user_id' => $this->user->id]);
-
-            $this->avatar->file()->create([
-                'original_name' => $this->filename(),
-                'saved_name' => $this->hashName(),
-                'size' => \File::size($this->savePath()),
-                'mime_type' => \File::mimeType($this->savePath()),
-            ]);
+            $this->avatar->file()->create($this->attributes());
         });
 
         return $this->avatar;
@@ -49,15 +43,25 @@ class DefaultAvatar
             ->save($this->savePath());
     }
 
-    private function hashName()
+    private function attributes()
     {
-        return $this->hashName
-            ?? $this->hashName = uniqid(self::Filename.$this->user->id).self::Extension;
+        return [
+            'original_name' => $this->filename(),
+            'saved_name' => $this->hashName(),
+            'size' => \File::size($this->savePath()),
+            'mime_type' => \File::mimeType($this->savePath()),
+        ];
     }
 
     private function filename()
     {
         return self::Filename.$this->user->id.self::Extension;
+    }
+
+    private function hashName()
+    {
+        return $this->hashName
+            ?? $this->hashName = uniqid(self::Filename.$this->user->id).self::Extension;
     }
 
     private function savePath()

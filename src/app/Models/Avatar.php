@@ -20,6 +20,7 @@ class Avatar extends Model implements Attachable
     protected $mimeTypes = ['image/png', 'image/jpg'];
 
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
+    protected $hidden = ['user_id', 'created_at', 'updated_at'];
 
     public function user()
     {

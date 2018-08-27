@@ -26,8 +26,8 @@ class AvatarController extends Controller
     {
         $this->authorize('update', $avatar);
 
-        $avatar = auth()->user()->generateAvatar();
+        auth()->user()->generateAvatar();
 
-        return ['avatarId' => $avatar->id];
+        return ['avatarId' => auth()->user()->avatar->id];
     }
 }
