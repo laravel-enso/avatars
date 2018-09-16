@@ -2,7 +2,7 @@
 
 namespace LaravelEnso\AvatarManager\app\Policies;
 
-use App\User;
+use LaravelEnso\Core\app\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
 

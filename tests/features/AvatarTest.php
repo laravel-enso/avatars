@@ -1,12 +1,12 @@
 <?php
 
-use App\User;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
+use LaravelEnso\Core\app\Models\User;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\TestHelper\app\Traits\SignIn;
-use LaravelEnso\FileManager\app\Classes\FileManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use LaravelEnso\FileManager\app\Classes\FileManager;
 
 class AvatarTest extends TestCase
 {
