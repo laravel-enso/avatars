@@ -17,7 +17,7 @@ class Avatar extends Model implements Attachable
 
     protected $optimizeImages = true;
     protected $resizeImages = [self::ImageWidth, self::ImageHeight];
-    protected $mimeTypes = ['image/png', 'image/jpg'];
+    protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
 
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
