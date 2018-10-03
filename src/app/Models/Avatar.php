@@ -21,6 +21,9 @@ class Avatar extends Model implements Attachable
 
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
+    protected $casts = [
+        'user_id' => 'int',
+    ];
 
     public function user()
     {
