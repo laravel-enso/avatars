@@ -4,13 +4,12 @@ use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Support\Facades\Storage;
-use LaravelEnso\TestHelper\app\Traits\SignIn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LaravelEnso\FileManager\app\Classes\FileManager;
 
 class AvatarTest extends TestCase
 {
-    use RefreshDatabase, SignIn;
+    use RefreshDatabase;
 
     private $user;
 
@@ -21,22 +20,30 @@ class AvatarTest extends TestCase
         // $this->withoutExceptionHandling();
 
         $this->seed()
-            ->signIn($this->user = User::first());
+            ->actingAs($this->user = User::first());
 
         $this->user->generateAvatar();
     }
 
-    /** @test */
-    public function show()
+    public function tearDown()
     {
-        $this->get('/core/avatars/'.$this->user->avatar->id)
-            ->assertStatus(200);
-
         $this->cleanUp();
+        parent::tearDown();
     }
 
     /** @test */
-    public function update()
+    public function can_display_avatar()
+    {
+        $this->get(route('core.avatars.show', [$this->user->avatar->id], false))
+            ->assertStatus(200)
+            ->assertHeader(
+                'content-disposition',
+                'inline; filename='.$this->user->avatar->file->saved_name
+            );
+    }
+
+    /** @test */
+    public function can_update_avatar()
     {
         $this->user->load('avatar.file');
 
@@ -49,37 +56,29 @@ class AvatarTest extends TestCase
         );
 
         $this->assertNotNull($this->user->avatar->fresh());
-
         $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
 
         Storage::assertExists(
             FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
         );
-
-        $this->cleanUp();
     }
 
     /** @test */
-    public function store()
+    public function can_store_avatar()
     {
         $this->user->load('avatar');
 
-        $this->uploadAvatar();
+        $this->post(route('core.avatars.store', [], false), [
+            'avatar' => UploadedFile::fake()->image('avatar.png'),
+        ]);
 
         $this->user->load('avatar');
 
         $this->assertNotNull($this->user->avatar);
 
-        Storage::assertExists(FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name);
-
-        $this->cleanUp();
-    }
-
-    private function uploadAvatar()
-    {
-        $this->post(route('core.avatars.store', [], false), [
-            'avatar' => UploadedFile::fake()->image('avatar.png'),
-        ]);
+        Storage::assertExists(
+            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
+        );
     }
 
     private function cleanUp()

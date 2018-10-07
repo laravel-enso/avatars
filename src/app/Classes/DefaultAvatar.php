@@ -36,7 +36,7 @@ class DefaultAvatar
 
     private function generate()
     {
-        \Avatar::create($this->user->fullName)
+        \Avatar::create($this->user->person->name)
             ->setDimension(Avatar::ImageWidth, Avatar::ImageHeight)
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
@@ -75,7 +75,7 @@ class DefaultAvatar
             \Storage::makeDirectory($folder);
         }
 
-        return storage_path('app/'.$folder.'/'.$this->hashName());
+        return storage_path('app'.DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$this->hashName());
     }
 
     private function background()

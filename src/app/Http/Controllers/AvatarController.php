@@ -4,13 +4,12 @@ namespace LaravelEnso\AvatarManager\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use LaravelEnso\AvatarManager\app\Models\Avatar;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use LaravelEnso\AvatarManager\app\Http\Requests\ValidateAvatarRequest;
 
 class AvatarController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests;
 
     public function store(ValidateAvatarRequest $request)
     {
