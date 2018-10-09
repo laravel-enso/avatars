@@ -12,10 +12,6 @@ trait HasAvatar
         self::created(function ($model) {
             $model->generateAvatar();
         });
-
-        self::deleting(function ($model) {
-            $model->avatar->delete();
-        });
     }
 
     public function avatar()
