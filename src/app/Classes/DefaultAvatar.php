@@ -71,7 +71,7 @@ class DefaultAvatar
             ? FileManager::TestingFolder
             : config('enso.config.paths.avatars');
 
-        if (!\Storage::has($folder)) {
+        if (! \Storage::has($folder)) {
             \Storage::makeDirectory($folder);
         }
 
