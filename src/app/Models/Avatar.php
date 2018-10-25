@@ -15,17 +15,17 @@ class Avatar extends Model implements Attachable
     const ImageWidth = 250;
     const ImageHeight = 250;
 
-    protected $optimizeImages = true;
-
-    protected $resizeImages = [self::ImageWidth, self::ImageHeight];
-
-    protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
 
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
 
     protected $casts = ['user_id' => 'int'];
+
+    protected $optimizeImages = true;
+
+    protected $resizeImages = [self::ImageWidth, self::ImageHeight];
+
+    protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
 
     public function user()
     {
