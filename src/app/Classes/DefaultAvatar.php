@@ -67,7 +67,7 @@ class DefaultAvatar
 
     private function savePath()
     {
-        $folder = app()->environment() === 'testing'
+        $folder = app()->environment('testing')
             ? FileManager::TestingFolder
             : config('enso.config.paths.avatars');
 
