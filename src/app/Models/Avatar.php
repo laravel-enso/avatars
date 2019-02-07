@@ -7,11 +7,10 @@ use LaravelEnso\Core\app\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\FileManager\app\Traits\HasFile;
 use LaravelEnso\FileManager\app\Contracts\Attachable;
-use LaravelEnso\Multitenancy\app\Traits\SystemConnection;
 
 class Avatar extends Model implements Attachable
 {
-    use HasFile, SystemConnection;
+    use HasFile;
 
     const ImageWidth = 250;
     const ImageHeight = 250;
