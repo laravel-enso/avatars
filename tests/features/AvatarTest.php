@@ -13,7 +13,7 @@ class AvatarTest extends TestCase
 
     private $user;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class AvatarTest extends TestCase
         $this->user->generateAvatar();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->cleanUp();
         parent::tearDown();
