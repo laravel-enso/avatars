@@ -9,9 +9,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->commands([
-            GenerateAvatars::class,
-        ]);
+        $this->commands(GenerateAvatars::class);
 
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
@@ -20,10 +18,5 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/storage/app' => storage_path('app'),
         ], 'avatars-storage');
-    }
-
-    public function register()
-    {
-        //
     }
 }

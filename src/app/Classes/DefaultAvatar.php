@@ -28,7 +28,12 @@ class DefaultAvatar
         \DB::transaction(function () {
             $this->avatar = $this->user->avatar()
                 ->firstOrcreate(['user_id' => $this->user->id]);
-            $this->avatar->file()->create($this->attributes());
+            $this->avatar->file()->create([
+                'original_name' => $this->filename(),
+                'saved_name' => $this->hashName(),
+                'size' => \File::size($this->savePath()),
+                'mime_type' => \File::mimeType($this->savePath()),
+            ]);
         });
 
         return $this->avatar;
@@ -42,16 +47,6 @@ class DefaultAvatar
             ->setBackground($this->background())
             ->getImageObject()
             ->save($this->savePath());
-    }
-
-    private function attributes()
-    {
-        return [
-            'original_name' => $this->filename(),
-            'saved_name' => $this->hashName(),
-            'size' => \File::size($this->savePath()),
-            'mime_type' => \File::mimeType($this->savePath()),
-        ];
     }
 
     private function filename()
@@ -75,7 +70,10 @@ class DefaultAvatar
             \Storage::makeDirectory($folder);
         }
 
-        return storage_path('app'.DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$this->hashName());
+        return storage_path(
+            'app'.DIRECTORY_SEPARATOR.$folder
+            .DIRECTORY_SEPARATOR.$this->hashName()
+        );
     }
 
     private function background()
