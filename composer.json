@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.1.0",
         "laravolt/avatar": "2.0.*",
-        "laravel-enso/core": "4.1.*",
+        "laravel-enso/core": "4.2.*",
         "laravel-enso/filemanager": "3.0.*",
         "laravel-enso/structuremanager": "3.0.*",
         "laravel-enso/imagetransformer": "1.4.*"
