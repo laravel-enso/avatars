@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Http\Requests;
+namespace LaravelEnso\Avatars\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

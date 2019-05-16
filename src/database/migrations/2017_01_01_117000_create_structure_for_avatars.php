@@ -1,8 +1,8 @@
 <?php
 
-use LaravelEnso\StructureManager\app\Classes\StructureMigration;
+use LaravelEnso\Migrator\app\Database\Migration;
 
-class CreateStructureForAvatars extends StructureMigration
+class CreateStructureForAvatars extends Migration
 {
     protected $permissions = [
         ['name' => 'core.avatars.update', 'description' => 'Update avatar', 'type' => 1, 'is_default' => true],

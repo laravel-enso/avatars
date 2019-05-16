@@ -1,12 +1,13 @@
 <?php
 
-namespace LaravelEnso\AvatarManager\app\Models;
+namespace LaravelEnso\Avatars\app\Models;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\FileManager\app\Traits\HasFile;
-use LaravelEnso\FileManager\app\Contracts\Attachable;
+use LaravelEnso\Files\app\Traits\HasFile;
+use LaravelEnso\Files\app\Contracts\Attachable;
 
 class Avatar extends Model implements Attachable
 {
@@ -23,9 +24,14 @@ class Avatar extends Model implements Attachable
 
     protected $optimizeImages = true;
 
-    protected $resizeImages = [self::ImageWidth, self::ImageHeight];
+    protected $resizeImages = [
+        'width' => self::ImageWidth,
+        'height' => self::ImageHeight,
+    ];
 
     protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+
+    protected $folder = 'avatars';
 
     public function user()
     {
@@ -36,7 +42,7 @@ class Avatar extends Model implements Attachable
     {
         $avatar = null;
 
-        \DB::transaction(function () use (&$avatar, $file) {
+        DB::transaction(function () use (&$avatar, $file) {
             $this->delete();
 
             $avatar = Avatar::create(['user_id' => auth()->user()->id]);
@@ -45,10 +51,5 @@ class Avatar extends Model implements Attachable
         });
 
         return $avatar;
-    }
-
-    public function folder()
-    {
-        return config('enso.config.paths.avatars');
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
 Route::middleware(['web', 'auth', 'core'])
-    ->namespace('LaravelEnso\AvatarManager\app\Http\Controllers')
-    ->prefix('api/core')->as('core.')
+    ->namespace('LaravelEnso\Avatars\app\Http\Controllers')
+    ->prefix('api/core/avatars')
+    ->as('core.avatars.')
     ->group(function () {
-        Route::resource('avatars', 'AvatarController')
-            ->only('show', 'store', 'update');
+        Route::post('', 'Store')->name('store');
+        Route::patch('{avatar}', 'Update')->name('update');
+        Route::get('{avatar}', 'Show')->name('show');
     });

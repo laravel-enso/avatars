@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelEnso\AvatarManager;
+namespace LaravelEnso\Avatars;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\AvatarManager\app\Commands\GenerateAvatars;
+use LaravelEnso\Avatars\app\Commands\GenerateAvatars;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -5,7 +5,6 @@ use Illuminate\Http\UploadedFile;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use LaravelEnso\FileManager\app\Classes\FileManager;
 
 class AvatarTest extends TestCase
 {
@@ -17,10 +16,12 @@ class AvatarTest extends TestCase
     {
         parent::setUp();
 
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->seed()
             ->actingAs($this->user = User::first());
+
+        $this->createTestFolder();
 
         $this->user->generateAvatar();
     }
@@ -52,14 +53,14 @@ class AvatarTest extends TestCase
         $this->patch(route('core.avatars.update', $this->user->avatar->id, false));
 
         Storage::assertMissing(
-            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$oldAvatar->file->saved_name
+            $this->filePath($oldAvatar)
         );
 
         $this->assertNotNull($this->user->avatar->fresh());
         $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
 
         Storage::assertExists(
-            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
+            $this->user->avatar->folder().DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
         );
     }
 
@@ -77,14 +78,28 @@ class AvatarTest extends TestCase
         $this->assertNotNull($this->user->avatar);
 
         Storage::assertExists(
-            FileManager::TestingFolder.DIRECTORY_SEPARATOR.$this->user->avatar->file->saved_name
+            $this->filePath($this->user->avatar)
         );
+    }
+
+    private function filePath($avatar)
+    {
+        return $avatar->folder()
+            .DIRECTORY_SEPARATOR
+            .$avatar->file->saved_name;
+    }
+
+    private function createTestFolder()
+    {
+        if (! Storage::has(config('enso.files.paths.testing'))) {
+            Storage::makeDirectory(config('enso.files.paths.testing'));
+        }
     }
 
     private function cleanUp()
     {
         $this->user->avatar->delete();
 
-        \Storage::deleteDirectory(FileManager::TestingFolder);
+        Storage::deleteDirectory(config('enso.files.paths.testing'));
     }
 }

@@ -1,13 +1,13 @@
 {
-    "name": "laravel-enso/avatarmanager",
+    "name": "laravel-enso/avatars",
     "description": "User Avatar manager dependency for Laravel Enso",
     "keywords": [
         "laravel-enso",
-        "avatarmanager",
+        "avatars",
         "avatar-manager",
         "avatar"
     ],
-    "homepage": "https://github.com/laravel-enso/AvatarManager",
+    "homepage": "https://github.com/laravel-enso/avatars",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -21,21 +21,21 @@
     "require": {
         "php": ">=7.1.0",
         "laravolt/avatar": "2.0.*",
-        "laravel-enso/core": "4.2.*",
-        "laravel-enso/filemanager": "3.0.*",
-        "laravel-enso/structuremanager": "3.0.*",
-        "laravel-enso/imagetransformer": "1.4.*"
+        "laravel-enso/core": "4.3.*",
+        "laravel-enso/files": "3.1.*",
+        "laravel-enso/migrator": "1.0.*",
+        "laravel-enso/image-transformer": "1.5.*"
     },
     "autoload": {
         "psr-4": {
-            "LaravelEnso\\AvatarManager\\": "src/"
+            "LaravelEnso\\Avatars\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelEnso\\AvatarManager\\AppServiceProvider",
-                "LaravelEnso\\AvatarManager\\AuthServiceProvider"
+                "LaravelEnso\\Avatars\\AppServiceProvider",
+                "LaravelEnso\\Avatars\\AuthServiceProvider"
             ],
             "aliases": {}
         }
