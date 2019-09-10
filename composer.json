@@ -20,9 +20,9 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravolt/avatar": "2.0.*",
-        "laravel-enso/core": "4.3.*",
-        "laravel-enso/files": "3.1.*",
+        "laravolt/avatar": "3.0.*",
+        "laravel-enso/core": "4.4.*",
+        "laravel-enso/files": "3.2.*",
         "laravel-enso/migrator": "1.0.*",
         "laravel-enso/image-transformer": "1.5.*"
     },

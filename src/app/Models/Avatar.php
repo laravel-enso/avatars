@@ -4,6 +4,7 @@ namespace LaravelEnso\Avatars\app\Models;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\Files\app\Traits\HasFile;
@@ -13,8 +14,8 @@ class Avatar extends Model implements Attachable
 {
     use HasFile;
 
-    const ImageWidth = 250;
-    const ImageHeight = 250;
+    const Width = 250;
+    const Height = 250;
 
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
 
@@ -25,8 +26,8 @@ class Avatar extends Model implements Attachable
     protected $optimizeImages = true;
 
     protected $resizeImages = [
-        'width' => self::ImageWidth,
-        'height' => self::ImageHeight,
+        'width' => self::Width,
+        'height' => self::Height,
     ];
 
     protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -45,7 +46,7 @@ class Avatar extends Model implements Attachable
         DB::transaction(function () use (&$avatar, $file) {
             $this->delete();
 
-            $avatar = Avatar::create(['user_id' => auth()->user()->id]);
+            $avatar = Avatar::create(['user_id' => Auth::user()->id]);
 
             $avatar->upload($file);
         });

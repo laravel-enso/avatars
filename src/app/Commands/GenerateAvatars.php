@@ -13,12 +13,8 @@ class GenerateAvatars extends Command
 
     public function handle()
     {
-        auth()->onceUsingId(User::first()->id);
-
-        User::doesntHave('avatar')
-            ->get()
-            ->each
-            ->generateAvatar();
+        User::doesntHave('avatar')->get()
+            ->each->generateAvatar();
 
         $this->info('Avatars generated successfully');
     }

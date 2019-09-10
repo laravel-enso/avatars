@@ -3,6 +3,7 @@
 namespace LaravelEnso\Avatars\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use LaravelEnso\Avatars\app\Models\Avatar;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,8 +15,8 @@ class Update extends Controller
     {
         $this->authorize('update', $avatar);
 
-        auth()->user()->generateAvatar();
+        Auth::user()->generateAvatar();
 
-        return ['avatarId' => auth()->user()->avatar->id];
+        return ['avatarId' => Auth::user()->avatar->id];
     }
 }

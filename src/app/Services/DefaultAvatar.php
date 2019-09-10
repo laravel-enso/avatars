@@ -6,6 +6,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use LaravelEnso\Core\app\Models\User;
+use Laravolt\Avatar\Facade as Service;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\app\Models\Avatar;
 
@@ -44,8 +45,8 @@ class DefaultAvatar
     {
         $this->avatar->ensureFolderExists();
 
-        \Avatar::create($this->user->person->name)
-            ->setDimension(Avatar::ImageWidth, Avatar::ImageHeight)
+        Service::create($this->user->person->name)
+            ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->getImageObject()
