@@ -49,7 +49,6 @@ class DefaultAvatar
             ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
-            ->getImageObject()
             ->save($this->filePath());
     }
 
@@ -73,7 +72,6 @@ class DefaultAvatar
 
     private function background()
     {
-        return collect(config('laravolt.avatar.backgrounds'))
-            ->random();
+        return collect(config('laravolt.avatar.backgrounds'))->random();
     }
 }
