@@ -46,7 +46,7 @@ class Avatar extends Model implements Attachable
         DB::transaction(function () use (&$avatar, $file) {
             $this->delete();
 
-            $avatar = Avatar::create(['user_id' => Auth::user()->id]);
+            $avatar = self::create(['user_id' => Auth::user()->id]);
 
             $avatar->upload($file);
         });
