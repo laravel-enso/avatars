@@ -34,7 +34,7 @@ class DefaultAvatar
             $this->generate();
 
             $this->avatar->attach(
-                new File($this->filePath()), $this->originalName()
+                new File($this->filePath()), $this->originalName(), $this->user
             );
         });
 
