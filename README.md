@@ -6,7 +6,7 @@
 [![Total Downloads](https://poser.pugx.org/laravel-enso/avatars/downloads)](https://packagist.org/packages/laravel-enso/avatars)
 [![Latest Stable Version](https://poser.pugx.org/laravel-enso/avatars/version)](https://packagist.org/packages/laravel-enso/avatars)
 
-User Avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
+User avatar manager dependency for [Laravel Enso](https://github.com/laravel-enso/Enso).
 
 This package works exclusively within the [Enso](https://github.com/laravel-enso/Enso) ecosystem.
 
@@ -17,23 +17,9 @@ For live examples and demos, you may visit [laravel-enso.com](https://www.larave
 [![Watch the demo](https://laravel-enso.github.io/avatars/screenshots/bulma_cap001_thumb.png)](https://laravel-enso.github.io/avatars/videos/bulma_avatar_change.webm)
 <sup>click on the photo to view a short demo in compatible browsers</sup>
 
-## Installation
+### Installation, Configuration & Usage
 
-Comes pre-installed in Enso.
-
-## Features
-
-- comes with a table migration, in order to be able to store avatar related data
-- includes model, routes & controllers
-- creates a folder used to store the avatar files and a default avatar for users that do not have an avatar set
-- uses the [File Manager](https://github.com/laravel-enso/Files) package for uploading the avatar files
-- uses the [Image Transformer](https://github.com/laravel-enso/ImageTransformer) package for cropping and optimizing the avatar files
-- uses the [Laravolt Avatar](https://github.com/laravolt/avatar) for generating avatars from user names
-- uses a policy to ensure that normal users can only modify their own avatars, while administrators can modify any avatar 
-
-### Configuration & Usage
-
-Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/avatar-manager.html)
+Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/avatars.html)
 
 ### Contributions
 
