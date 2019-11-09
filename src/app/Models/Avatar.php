@@ -2,13 +2,13 @@
 
 namespace LaravelEnso\Avatars\app\Models;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use LaravelEnso\Core\app\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\Files\app\Traits\HasFile;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use LaravelEnso\Core\app\Models\User;
 use LaravelEnso\Files\app\Contracts\Attachable;
+use LaravelEnso\Files\app\Traits\HasFile;
 
 class Avatar extends Model implements Attachable
 {
