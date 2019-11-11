@@ -3,12 +3,12 @@
 namespace LaravelEnso\Avatars\app\Services;
 
 use Illuminate\Http\File;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use LaravelEnso\Avatars\app\Models\Avatar;
 use LaravelEnso\Core\app\Models\User;
 use Laravolt\Avatar\Facade as Service;
-use Illuminate\Support\Facades\Storage;
-use LaravelEnso\Avatars\app\Models\Avatar;
 
 class DefaultAvatar
 {

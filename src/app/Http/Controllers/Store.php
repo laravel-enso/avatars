@@ -2,8 +2,8 @@
 
 namespace LaravelEnso\Avatars\app\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller;
 use LaravelEnso\Avatars\app\Http\Requests\ValidateAvatarRequest;
 
 class Store extends Controller
