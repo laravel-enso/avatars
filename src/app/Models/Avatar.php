@@ -14,8 +14,8 @@ class Avatar extends Model implements Attachable
 {
     use HasFile;
 
-    const Width = 250;
-    const Height = 250;
+    public const Width = 250;
+    public const Height = 250;
 
     protected $fillable = ['user_id', 'original_name', 'saved_name'];
 
