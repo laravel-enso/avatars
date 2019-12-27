@@ -65,7 +65,7 @@ class DefaultAvatar
     private function filePath()
     {
         return $this->filePath
-            ?? $this->filePath = Storage::path(
+            ??= Storage::path(
                 $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
             );
     }

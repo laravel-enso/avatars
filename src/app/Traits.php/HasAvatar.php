@@ -9,9 +9,7 @@ trait HasAvatar
 {
     public static function bootHasAvatar()
     {
-        self::created(function ($model) {
-            $model->generateAvatar();
-        });
+        self::created(fn ($model) => $model->generateAvatar());
     }
 
     public function avatar()
