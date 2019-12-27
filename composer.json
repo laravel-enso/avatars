@@ -3,8 +3,8 @@
     "description": "User Avatar manager dependency for Laravel Enso",
     "keywords": [
         "laravel-enso",
+        "laravel",
         "avatars",
-        "avatar-manager",
         "avatar"
     ],
     "homepage": "https://github.com/laravel-enso/avatars",
@@ -19,12 +19,12 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0",
-        "laravolt/avatar": "3.0.*",
-        "laravel-enso/core": "4.6.*",
+        "laravel-enso/core": "4.7.*",
         "laravel-enso/files": "3.3.*",
+        "laravel-enso/image-transformer": "1.5.*",
         "laravel-enso/migrator": "1.0.*",
-        "laravel-enso/image-transformer": "1.5.*"
+        "laravolt/avatar": "3.0.*",
+        "php": ">=7.4.0"
     },
     "autoload": {
         "psr-4": {

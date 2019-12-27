@@ -41,15 +41,13 @@ class Avatar extends Model implements Attachable
 
     public function store(UploadedFile $file)
     {
-        $avatar = null;
+        DB::beginTransaction();
 
-        DB::transaction(function () use (&$avatar, $file) {
-            $this->delete();
+        $this->delete();
+        $avatar = self::create(['user_id' => Auth::user()->id]);
+        $avatar->upload($file);
 
-            $avatar = self::create(['user_id' => Auth::user()->id]);
-
-            $avatar->upload($file);
-        });
+        DB::commit();
 
         return $avatar;
     }

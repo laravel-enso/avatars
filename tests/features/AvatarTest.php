@@ -1,16 +1,16 @@
 <?php
 
-use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
-use LaravelEnso\Core\app\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use LaravelEnso\Core\app\Models\User;
+use Tests\TestCase;
 
 class AvatarTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -29,6 +29,7 @@ class AvatarTest extends TestCase
     public function tearDown(): void
     {
         $this->cleanUp();
+
         parent::tearDown();
     }
 

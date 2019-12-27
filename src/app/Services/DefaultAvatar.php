@@ -3,6 +3,7 @@
 namespace LaravelEnso\Avatars\app\Services;
 
 use Illuminate\Http\File;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -64,14 +65,15 @@ class DefaultAvatar
 
     private function filePath()
     {
-        return $this->filePath
-            ??= Storage::path(
-                $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
-            );
+        return $this->filePath ??= Storage::path(
+            $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
+        );
     }
 
     private function background()
     {
-        return collect(config('laravolt.avatar.backgrounds'))->random();
+        return (new Collection(
+            config('laravolt.avatar.backgrounds')
+        ))->random();
     }
 }
