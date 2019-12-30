@@ -3,7 +3,7 @@
 namespace LaravelEnso\Avatars;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Avatars\app\Commands\GenerateAvatars;
+use LaravelEnso\Avatars\App\Commands\GenerateAvatars;
 
 class AppServiceProvider extends ServiceProvider
 {

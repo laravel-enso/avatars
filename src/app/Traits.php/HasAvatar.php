@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelEnso\Avatars\app\Traits;
+namespace LaravelEnso\Avatars\App\Traits;
 
-use LaravelEnso\Avatars\app\Models\Avatar;
-use LaravelEnso\Avatars\app\Services\DefaultAvatar;
+use LaravelEnso\Avatars\App\Models\Avatar;
+use LaravelEnso\Avatars\App\Services\DefaultAvatar;
 
 trait HasAvatar
 {
