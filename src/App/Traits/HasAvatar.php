@@ -17,12 +17,10 @@ trait HasAvatar
         return $this->hasOne(Avatar::class);
     }
 
-    public function generateAvatar()
+    public function generateAvatar(): Avatar
     {
         optional($this->avatar)->delete();
 
-        (new DefaultAvatar($this))->create();
-
-        $this->load('avatar');
+        return (new DefaultAvatar($this))->create();
     }
 }

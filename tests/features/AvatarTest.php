@@ -22,8 +22,6 @@ class AvatarTest extends TestCase
             ->actingAs($this->user = User::first());
 
         $this->createTestFolder();
-
-        $this->user->generateAvatar();
     }
 
     public function tearDown(): void
@@ -51,13 +49,15 @@ class AvatarTest extends TestCase
 
         $oldAvatar = $this->user->avatar;
 
-        $this->patch(route('core.avatars.update', $this->user->avatar->id, false));
+        $this->patch(route('core.avatars.update', $oldAvatar->id, false));
 
         Storage::assertMissing(
             $this->filePath($oldAvatar)
         );
 
-        $this->assertNotNull($this->user->avatar->fresh());
+        unset($this->user->avatar);
+
+        $this->assertNotNull($this->user->avatar);
         $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
 
         Storage::assertExists(

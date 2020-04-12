@@ -28,21 +28,22 @@ class DefaultAvatar
 
     public function create()
     {
-        DB::transaction(function () {
-            $this->avatar = $this->user->avatar()
-                ->firstOrCreate(['user_id' => $this->user->id]);
-
-            $this->generate();
-
-            $this->avatar->attach(
-                new File($this->filePath()), $this->originalName(), $this->user
-            );
-        });
+        DB::transaction(fn () => $this->findOrCreate()
+            ->generate()
+            ->attach());
 
         return $this->avatar;
     }
 
-    private function generate()
+    private function findOrCreate(): self
+    {
+        $this->avatar = $this->user->avatar()
+            ->firstOrCreate(['user_id' => $this->user->id]);
+
+        return $this;
+    }
+
+    private function generate(): self
     {
         $this->avatar->ensureFolderExists();
 
@@ -51,26 +52,35 @@ class DefaultAvatar
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->save($this->filePath());
+
+        return $this;
     }
 
-    private function originalName()
+    private function attach(): void
+    {
+        $avatar = new File($this->filePath());
+
+        $this->avatar->attach($avatar, $this->originalName(), $this->user);
+    }
+
+    private function originalName(): string
     {
         return self::Filename.$this->user->id.'.'.self::Extension;
     }
 
-    private function hashName()
+    private function hashName(): string
     {
         return Str::random(40).'.'.self::Extension;
     }
 
-    private function filePath()
+    private function filePath(): string
     {
         return $this->filePath ??= Storage::path(
             $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
         );
     }
 
-    private function background()
+    private function background(): string
     {
         return (new Collection(
             config('laravolt.avatar.backgrounds')

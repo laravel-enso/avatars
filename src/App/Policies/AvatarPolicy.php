@@ -10,16 +10,15 @@ class AvatarPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user)
+    public function before(User $user)
     {
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isSupervisor()) {
             return true;
         }
     }
 
-    public function update(User $user, Avatar $avatar)
+    public function update(User $user, Avatar $avatar): bool
     {
-        return ! $user->isImpersonating()
-            && $user->id === $avatar->user_id;
+        return ! $user->isImpersonating() && $user->id === $avatar->user_id;
     }
 }
