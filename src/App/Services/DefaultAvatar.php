@@ -28,7 +28,7 @@ class DefaultAvatar
 
     public function create()
     {
-        DB::transaction(fn() => $this->findOrCreate()
+        DB::transaction(fn () => $this->findOrCreate()
             ->generate()
             ->attach());
 
