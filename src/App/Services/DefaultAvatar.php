@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LaravelEnso\Avatars\App\Models\Avatar;
 use LaravelEnso\Core\App\Models\User;
-use LaravelEnso\Files\App\Services\Files;
 use Laravolt\Avatar\Facade as Service;
 
 class DefaultAvatar
@@ -29,7 +28,7 @@ class DefaultAvatar
 
     public function create()
     {
-        DB::transaction(fn () => $this->findOrCreate()
+        DB::transaction(fn() => $this->findOrCreate()
             ->generate()
             ->attach());
 
@@ -74,8 +73,6 @@ class DefaultAvatar
 
     private function filePath(): string
     {
-        Files::ensureFolderExists($this->avatar->folder());
-
         return $this->filePath ??= Storage::path(
             $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
         );
