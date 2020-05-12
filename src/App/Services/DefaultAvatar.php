@@ -45,8 +45,6 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        $this->avatar->ensureFolderExists();
-
         Service::create($this->user->person->name)
             ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
