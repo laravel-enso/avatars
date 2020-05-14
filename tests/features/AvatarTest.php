@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Core\App\Models\User;
 use Tests\TestCase;
@@ -92,8 +93,8 @@ class AvatarTest extends TestCase
 
     private function createTestFolder()
     {
-        if (! Storage::has(config('enso.files.paths.testing'))) {
-            Storage::makeDirectory(config('enso.files.paths.testing'));
+        if (! Storage::has(Config::get('enso.files.testingFolder'))) {
+            Storage::makeDirectory(Config::get('enso.files.testingFolder'));
         }
     }
 
@@ -101,6 +102,6 @@ class AvatarTest extends TestCase
     {
         $this->user->avatar->delete();
 
-        Storage::deleteDirectory(config('enso.files.paths.testing'));
+        Storage::deleteDirectory(Config::get('enso.files.testingFolder'));
     }
 }
