@@ -2,14 +2,17 @@
 
 namespace LaravelEnso\Avatars;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use LaravelEnso\Avatars\App\Commands\GenerateAvatars;
+use LaravelEnso\Avatars\App\Models\Avatar;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->load()
+            ->mapMorphs()
             ->publish()
             ->commands(GenerateAvatars::class);
     }
@@ -19,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         $this->loadRoutesFrom(__DIR__.'/routes/api.php');
+
+        return $this;
+    }
+
+    private function mapMorphs()
+    {
+        Relation::morphMap([
+            Avatar::morphMapKey() => Avatar::class,
+        ]);
 
         return $this;
     }

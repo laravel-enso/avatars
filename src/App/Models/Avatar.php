@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\DB;
 use LaravelEnso\Core\App\Models\User;
 use LaravelEnso\Files\App\Contracts\Attachable;
 use LaravelEnso\Files\App\Traits\HasFile;
+use LaravelEnso\Helpers\App\Traits\CascadesMorphMap;
 
 class Avatar extends Model implements Attachable
 {
-    use HasFile;
+    use CascadesMorphMap, HasFile;
 
     public const Width = 250;
     public const Height = 250;
