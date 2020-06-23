@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['web', 'auth', 'core'])
+Route::middleware(['api', 'auth', 'core'])
     ->namespace('LaravelEnso\Avatars\Http\Controllers')
     ->prefix('api/core/avatars')
     ->as('core.avatars.')
