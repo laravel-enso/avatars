@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use LaravelEnso\Avatar\DynamicsRelations\Avatar as Relation;
 use LaravelEnso\Avatars\Commands\GenerateAvatars;
 use LaravelEnso\Avatars\Models\Avatar;
-use LaravelEnso\Core\Http\Resources\User;
+use LaravelEnso\Core\App\Models\User;
 use LaravelEnso\DynamicMethods\Services\Methods;
 
 class AppServiceProvider extends ServiceProvider
