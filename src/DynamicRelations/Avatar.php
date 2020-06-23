@@ -3,7 +3,6 @@
 namespace LaravelEnso\Avatar\DynamicsRelations;
 
 use Closure;
-use LaravelEnso\ActionLogger\Models\ActionLog;
 use LaravelEnso\Avatars\Models\Avatar as Model;
 use LaravelEnso\DynamicMethods\Contracts\Method;
 
