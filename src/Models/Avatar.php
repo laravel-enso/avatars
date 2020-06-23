@@ -1,15 +1,15 @@
 <?php
 
-namespace LaravelEnso\Avatars\App\Models;
+namespace LaravelEnso\Avatars\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use LaravelEnso\Core\App\Models\User;
-use LaravelEnso\Files\App\Contracts\Attachable;
-use LaravelEnso\Files\App\Traits\HasFile;
-use LaravelEnso\Helpers\App\Traits\CascadesMorphMap;
+use LaravelEnso\Core\Models\User;
+use LaravelEnso\Files\Contracts\Attachable;
+use LaravelEnso\Files\Traits\HasFile;
+use LaravelEnso\Helpers\Traits\CascadesMorphMap;
 
 class Avatar extends Model implements Attachable
 {
@@ -18,7 +18,7 @@ class Avatar extends Model implements Attachable
     public const Width = 250;
     public const Height = 250;
 
-    protected $fillable = ['user_id', 'original_name', 'saved_name'];
+    protected $guarded = ['id'];
 
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
 

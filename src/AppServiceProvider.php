@@ -2,35 +2,36 @@
 
 namespace LaravelEnso\Avatars;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Avatars\App\Commands\GenerateAvatars;
-use LaravelEnso\Avatars\App\Models\Avatar;
+use LaravelEnso\Avatar\DynamicsRelations\Avatar as Relation;
+use LaravelEnso\Avatars\Commands\GenerateAvatars;
+use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Core\Http\Resources\User;
+use LaravelEnso\DynamicMethods\Services\Methods;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->load()
-            ->mapMorphs()
+            ->relations()
             ->publish()
             ->commands(GenerateAvatars::class);
     }
 
     private function load()
     {
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'../database/migrations');
 
-        $this->loadRoutesFrom(__DIR__.'/routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'../routes/api.php');
 
         return $this;
     }
 
-    private function mapMorphs()
+    private function relations()
     {
-        Relation::morphMap([
-            Avatar::morphMapKey() => Avatar::class,
-        ]);
+        Avatar::morphMap();
+        Methods::bind(User::class, [Relation::class]);
 
         return $this;
     }
@@ -38,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
     private function publish()
     {
         $this->publishes([
-            __DIR__.'/storage/app' => storage_path('app'),
+            __DIR__.'../storage/app' => storage_path('app'),
         ], 'avatars-storage');
 
         return $this;

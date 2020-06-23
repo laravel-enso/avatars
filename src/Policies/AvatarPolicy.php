@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelEnso\Avatars\App\Policies;
+namespace LaravelEnso\Avatars\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use LaravelEnso\Avatars\App\Models\Avatar;
-use LaravelEnso\Core\App\Models\User;
+use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Core\Models\User;
 
 class AvatarPolicy
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelEnso\Avatars\App\Commands;
+namespace LaravelEnso\Avatars\Commands;
 
 use Illuminate\Console\Command;
-use LaravelEnso\Core\App\Models\User;
+use LaravelEnso\Core\Models\User;
 
 class GenerateAvatars extends Command
 {

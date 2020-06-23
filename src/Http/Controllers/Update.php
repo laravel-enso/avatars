@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelEnso\Avatars\App\Http\Controllers;
+namespace LaravelEnso\Avatars\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use LaravelEnso\Avatars\App\Models\Avatar;
+use LaravelEnso\Avatars\Models\Avatar;
 
 class Update extends Controller
 {

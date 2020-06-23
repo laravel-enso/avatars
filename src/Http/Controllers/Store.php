@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelEnso\Avatars\App\Http\Controllers;
+namespace LaravelEnso\Avatars\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
-use LaravelEnso\Avatars\App\Http\Requests\ValidateAvatarRequest;
+use LaravelEnso\Avatars\Http\Requests\ValidateAvatarRequest;
 
 class Store extends Controller
 {
