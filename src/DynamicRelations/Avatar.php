@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\Avatar\DynamicsRelations;
+namespace LaravelEnso\Avatars\DynamicsRelations;
 
 use Closure;
 use LaravelEnso\Avatars\Models\Avatar as Model;
