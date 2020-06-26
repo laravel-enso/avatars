@@ -3,8 +3,8 @@
 namespace LaravelEnso\Avatars;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Avatars\DynamicsRelations\Avatar as Relation;
 use LaravelEnso\Avatars\Commands\GenerateAvatars;
+use LaravelEnso\Avatars\DynamicsRelations\Avatar as Relation;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Core\Models\User;
 use LaravelEnso\DynamicMethods\Services\Methods;
