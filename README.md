@@ -1,7 +1,7 @@
 # Avatars
 
 [![StyleCI](https://github.styleci.io/repos/94704466/shield?branch=master)](https://github.styleci.io/repos/94704466)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d84efcf2530348d29f2ca573d06f7314)](https://www.codacy.com/app/laravel-enso/avatars?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/avatars&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f8a2e8a340c24360a6473f9c75b15dcb)](https://www.codacy.com/gh/laravel-enso/avatars?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/avatars&amp;utm_campaign=Badge_Grade) 
 [![License](https://poser.pugx.org/laravel-enso/avatars/license)](https://packagist.org/packages/laravel-enso/avatars)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/avatars/downloads)](https://packagist.org/packages/laravel-enso/avatars)
 [![Latest Stable Version](https://poser.pugx.org/laravel-enso/avatars/version)](https://packagist.org/packages/laravel-enso/avatars)
