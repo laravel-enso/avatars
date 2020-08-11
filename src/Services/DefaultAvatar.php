@@ -58,7 +58,7 @@ class DefaultAvatar
     {
         $avatar = new File($this->filePath());
 
-        $this->avatar->attach($avatar, $this->originalName(), $this->user);
+        $this->avatar->attach($avatar, $this->originalName());
     }
 
     private function originalName(): string
