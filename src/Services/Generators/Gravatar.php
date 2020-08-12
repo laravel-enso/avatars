@@ -29,7 +29,7 @@ class Gravatar
 
     protected function url(): string
     {
-        return 'https://www.gravatar.com/avatar/' . $this->hash() .
-            '?d=404&s=' . Avatar::Height;
+        return 'https://www.gravatar.com/avatar/'.$this->hash().
+            '?d=404&s='.Avatar::Height;
     }
 }

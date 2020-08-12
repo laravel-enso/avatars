@@ -7,8 +7,8 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
+use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Core\Models\User;
 
 class DefaultAvatar
