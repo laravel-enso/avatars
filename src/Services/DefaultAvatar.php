@@ -2,20 +2,19 @@
 
 namespace LaravelEnso\Avatars\Services;
 
+use Exception;
 use Illuminate\Http\File;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Avatars\Services\Generators\Laravolt;
+use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Core\Models\User;
-use Laravolt\Avatar\Facade as Service;
 
 class DefaultAvatar
 {
     private const Filename = 'avatar';
     private const Extension = 'jpg';
-    private const FontSize = 128;
 
     private $user;
     private $avatar;
@@ -45,11 +44,13 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        Service::create($this->user->person->name)
-            ->setDimension(Avatar::Width, Avatar::Height)
-            ->setFontSize(self::FontSize)
-            ->setBackground($this->background())
-            ->save($this->filePath());
+        try {
+            (new Gravatar($this->user))
+                ->generate($this->filePath());
+        } catch (Exception $e) {
+            (new Laravolt($this->user))
+                ->generate($this->filePath());
+        }
 
         return $this;
     }
@@ -76,12 +77,5 @@ class DefaultAvatar
         return $this->filePath ??= Storage::path(
             $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
         );
-    }
-
-    private function background(): string
-    {
-        return (new Collection(
-            config('laravolt.avatar.backgrounds')
-        ))->random();
     }
 }
