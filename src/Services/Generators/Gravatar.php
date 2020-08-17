@@ -29,7 +29,7 @@ class Gravatar extends Generator
     {
         return [
             'size' => Avatar::Height,
-            'default' => 404
+            'default' => 404,
         ];
     }
 }

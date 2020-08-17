@@ -5,8 +5,8 @@ namespace LaravelEnso\Avatars\Services;
 use Exception;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
-use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
+use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Core\Models\User;
 
 class DefaultAvatar
