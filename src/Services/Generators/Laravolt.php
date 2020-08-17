@@ -2,28 +2,25 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
+use Illuminate\Http\File;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Models\Avatar;
-use LaravelEnso\Core\Models\User;
 use Laravolt\Avatar\Facade as Service;
 
-class Laravolt
+class Laravolt extends Generator
 {
     private const FontSize = 128;
-    private User $user;
 
-    public function __construct(User $user)
+    public function generate(): File
     {
-        $this->user = $user;
-    }
-
-    public function generate($filePath)
-    {
-        Service::create($this->user->person->name)
+        Service::create($this->avatar->user->person->name)
             ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
-            ->save($filePath);
+            ->save(Storage::path($this->filePath()));
+
+        return new File(Storage::path($this->filePath()));
     }
 
     private function background(): string

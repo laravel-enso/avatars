@@ -2,34 +2,34 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Models\Avatar;
-use LaravelEnso\Core\Models\User;
 
-class Gravatar
+class Gravatar extends Generator
 {
-    private User $user;
-
-    public function __construct(User $user)
+    public function generate(): File
     {
-        $this->user = $user;
+        Storage::put($this->filePath(), file_get_contents($this->url()));
+
+        return new File(Storage::path($this->filePath()));
     }
 
-    public function generate($filePath)
+    private function url(): string
     {
-        file_put_contents(
-            $filePath,
-            file_get_contents($this->url())
-        );
+        return "https://www.gravatar.com/avatar/{$this->hash()}?".http_build_query($this->params());
     }
 
-    private function hash()
+    private function hash(): string
     {
-        return md5(strtolower($this->user->email));
+        return md5(strtolower($this->avatar->user->email));
     }
 
-    protected function url(): string
+    private function params(): array
     {
-        return 'https://www.gravatar.com/avatar/' . $this->hash() .
-            '?d=404&s=' . Avatar::Height;
+        return [
+            'size' => Avatar::Height,
+            'default' => 404
+        ];
     }
 }

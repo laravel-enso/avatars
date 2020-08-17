@@ -5,8 +5,6 @@ namespace LaravelEnso\Avatars\Services;
 use Exception;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Core\Models\User;
@@ -18,7 +16,7 @@ class DefaultAvatar
 
     private $user;
     private $avatar;
-    private $filePath;
+    private File $file;
 
     public function __construct(User $user)
     {
@@ -45,11 +43,11 @@ class DefaultAvatar
     private function generate(): self
     {
         try {
-            (new Gravatar($this->user))
-                ->generate($this->filePath());
+            $this->file = (new Gravatar($this->avatar))
+                ->generate();
         } catch (Exception $e) {
-            (new Laravolt($this->user))
-                ->generate($this->filePath());
+            $this->file = (new Laravolt($this->avatar))
+                ->generate();
         }
 
         return $this;
@@ -57,25 +55,11 @@ class DefaultAvatar
 
     private function attach(): void
     {
-        $avatar = new File($this->filePath());
-
-        $this->avatar->attach($avatar, $this->originalName());
+        $this->avatar->attach($this->file, $this->originalName());
     }
 
     private function originalName(): string
     {
         return self::Filename.$this->user->id.'.'.self::Extension;
-    }
-
-    private function hashName(): string
-    {
-        return Str::random(40).'.'.self::Extension;
-    }
-
-    private function filePath(): string
-    {
-        return $this->filePath ??= Storage::path(
-            $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
-        );
     }
 }
