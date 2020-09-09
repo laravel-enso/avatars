@@ -2,24 +2,21 @@
 
 namespace LaravelEnso\Avatars\Services;
 
+use Exception;
 use Illuminate\Http\File;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Avatars\Services\Generators\Gravatar;
+use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Core\Models\User;
-use Laravolt\Avatar\Facade as Service;
 
 class DefaultAvatar
 {
     private const Filename = 'avatar';
     private const Extension = 'jpg';
-    private const FontSize = 128;
 
     private $user;
     private $avatar;
-    private $filePath;
+    private File $file;
 
     public function __construct(User $user)
     {
@@ -45,43 +42,24 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        Service::create($this->user->person->name)
-            ->setDimension(Avatar::Width, Avatar::Height)
-            ->setFontSize(self::FontSize)
-            ->setBackground($this->background())
-            ->save($this->filePath());
+        try {
+            $this->file = (new Gravatar($this->avatar))
+                ->generate();
+        } catch (Exception $e) {
+            $this->file = (new Laravolt($this->avatar))
+                ->generate();
+        }
 
         return $this;
     }
 
     private function attach(): void
     {
-        $avatar = new File($this->filePath());
-
-        $this->avatar->attach($avatar, $this->originalName());
+        $this->avatar->attach($this->file, $this->originalName());
     }
 
     private function originalName(): string
     {
         return self::Filename.$this->user->id.'.'.self::Extension;
-    }
-
-    private function hashName(): string
-    {
-        return Str::random(40).'.'.self::Extension;
-    }
-
-    private function filePath(): string
-    {
-        return $this->filePath ??= Storage::path(
-            $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName()
-        );
-    }
-
-    private function background(): string
-    {
-        return (new Collection(
-            config('laravolt.avatar.backgrounds')
-        ))->random();
     }
 }
