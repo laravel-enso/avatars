@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use LaravelEnso\Avatars\Http\Controllers\Show;
 use LaravelEnso\Avatars\Http\Controllers\Store;
 use LaravelEnso\Avatars\Http\Controllers\Update;
-use LaravelEnso\Avatars\Http\Controllers\Show;
 
 Route::middleware(['api', 'auth', 'core'])
     ->prefix('api/core/avatars')
