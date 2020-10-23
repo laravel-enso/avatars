@@ -42,13 +42,8 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        try {
-            $this->file = (new Gravatar($this->avatar))
-                ->generate();
-        } catch (Exception $e) {
-            $this->file = (new Laravolt($this->avatar))
-                ->generate();
-        }
+        $this->file = (new Gravatar($this->avatar))->generate()
+            ?? (new Laravolt($this->avatar))->generate();
 
         return $this;
     }
