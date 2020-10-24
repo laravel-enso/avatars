@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\Avatars\Services;
 
-use Exception;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
@@ -42,13 +41,10 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        try {
-            $this->file = (new Gravatar($this->avatar))
-                ->generate();
-        } catch (Exception $e) {
-            $this->file = (new Laravolt($this->avatar))
-                ->generate();
-        }
+        $this->file = App::runningUnitTests()
+            ? (new Laravolt($this->avatar))->generate()
+            : (new Gravatar($this->avatar))->generate()
+                ?? (new Laravolt($this->avatar))->generate();
 
         return $this;
     }
