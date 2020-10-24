@@ -3,6 +3,7 @@
 namespace LaravelEnso\Avatars\Services;
 
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Avatars\Services\Generators\Laravolt;
@@ -44,7 +45,7 @@ class DefaultAvatar
         $this->file = App::runningUnitTests()
             ? (new Laravolt($this->avatar))->generate()
             : (new Gravatar($this->avatar))->generate()
-                ?? (new Laravolt($this->avatar))->generate();
+            ?? (new Laravolt($this->avatar))->generate();
 
         return $this;
     }
