@@ -15,6 +15,9 @@ class CreateAvatarsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
 
+            $table->tinyInteger('type')->unsigned();
+            $table->string('url')->nullable();
+
             $table->timestamps();
         });
     }
