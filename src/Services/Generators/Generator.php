@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
-use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Models\Avatar;
 
 class Generator

@@ -2,9 +2,7 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Enums\Types;
 use LaravelEnso\Avatars\Models\Avatar;
 

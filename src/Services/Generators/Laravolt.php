@@ -56,7 +56,7 @@ class Laravolt extends Generator
     private function attach(): void
     {
         $this->avatar->fill([
-            'type' => Types::File
+            'type' => Types::File,
         ])->save();
 
         $this->avatar->attach(
