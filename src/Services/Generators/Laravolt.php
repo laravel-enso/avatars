@@ -6,31 +6,46 @@ use Illuminate\Http\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use LaravelEnso\Avatars\Enums\Types;
 use LaravelEnso\Avatars\Models\Avatar;
+use Laravolt\Avatar\Avatar as ImageGenerator;
 use Laravolt\Avatar\Facade as Service;
 
-class Laravolt extends Generator
+class Laravolt
 {
     private const FontSize = 128;
     private const Filename = 'avatar';
     private const Extension = 'jpg';
     private string $path;
+    private Avatar $avatar;
+    private ImageGenerator $generator;
+
+    public function __construct(Avatar $avatar)
+    {
+        $this->avatar = $avatar;
+    }
 
     public function handle(): ?Avatar
     {
-        $this->generate()->attach();
+        $this->generate()
+            ->persist()
+            ->attach();
 
         return $this->avatar;
     }
 
-    public function generate(): self
+    private function generate(): self
     {
-        Service::create($this->avatar->user->person->name)
+        $this->generator = Service::create($this->avatar->user->person->name)
             ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
-            ->setBackground($this->background())
-            ->save(Storage::path($this->filePath()));
+            ->setBackground($this->background());
+
+        return $this;
+    }
+
+    private function persist(): self
+    {
+        $this->generator->save(Storage::path($this->filePath()));
 
         return $this;
     }
@@ -55,9 +70,7 @@ class Laravolt extends Generator
 
     private function attach(): void
     {
-        $this->avatar->fill([
-            'type' => Types::File
-        ])->save();
+        $this->avatar->save();
 
         $this->avatar->attach(
             new File(Storage::path($this->filePath())),
