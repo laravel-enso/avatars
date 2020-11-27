@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\Avatars\Services;
 
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
