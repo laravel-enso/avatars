@@ -16,7 +16,7 @@ class DefaultAvatar
 
     private $user;
     private $avatar;
-    private File $file;
+    private string $path;
 
     public function __construct(User $user)
     {
@@ -42,7 +42,7 @@ class DefaultAvatar
 
     private function generate(): self
     {
-        $this->file = App::runningUnitTests()
+        $this->path = App::runningUnitTests()
             ? (new Laravolt($this->avatar))->generate()
             : (new Gravatar($this->avatar))->generate()
             ?? (new Laravolt($this->avatar))->generate();
@@ -52,7 +52,7 @@ class DefaultAvatar
 
     private function attach(): void
     {
-        $this->avatar->attach($this->file, $this->originalName());
+        $this->avatar->attach($this->path, $this->originalName());
     }
 
     private function originalName(): string

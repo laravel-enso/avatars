@@ -12,7 +12,7 @@ class Laravolt extends Generator
 {
     private const FontSize = 128;
 
-    public function generate(): File
+    public function generate(): string
     {
         Service::create($this->avatar->user->person->name)
             ->setDimension(Avatar::Width, Avatar::Height)
@@ -20,7 +20,7 @@ class Laravolt extends Generator
             ->setBackground($this->background())
             ->save(Storage::path($this->filePath()));
 
-        return new File(Storage::path($this->filePath()));
+        return $this->filePath();
     }
 
     private function background(): string
