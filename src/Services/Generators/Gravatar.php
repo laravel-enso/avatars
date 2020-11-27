@@ -2,14 +2,13 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Models\Avatar;
 
 class Gravatar extends Generator
 {
-    public function generate(): ?File
+    public function generate(): ?string
     {
         if (Http::head($this->url())->status() === 404) {
             return null;
@@ -17,7 +16,7 @@ class Gravatar extends Generator
 
         Storage::put($this->filePath(), file_get_contents($this->url()));
 
-        return new File(Storage::path($this->filePath()));
+        return $this->filePath();
     }
 
     private function url(): string
