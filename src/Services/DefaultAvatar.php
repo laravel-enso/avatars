@@ -2,8 +2,9 @@
 
 namespace LaravelEnso\Avatars\Services;
 
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
+use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Avatars\Services\Generators\Laravolt;
 use LaravelEnso\Core\Models\User;
@@ -15,47 +16,31 @@ class DefaultAvatar
 
     private $user;
     private $avatar;
-    private string $path;
+    private File $file;
 
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    public function create()
+    public function create(): Avatar
     {
-        DB::transaction(fn () => $this->findOrCreate()
-            ->generate()
-            ->attach());
-
-        return $this->avatar;
+        return $this->findOrNew()->generate();
     }
 
-    private function findOrCreate(): self
+    private function findOrNew(): self
     {
         $this->avatar = $this->user->avatar()
-            ->firstOrCreate(['user_id' => $this->user->id]);
+            ->firstOrNew(['user_id' => $this->user->id]);
 
         return $this;
     }
 
-    private function generate(): self
+    private function generate(): Avatar
     {
-        $this->path = App::runningUnitTests()
-            ? (new Laravolt($this->avatar))->generate()
-            : (new Gravatar($this->avatar))->generate()
-            ?? (new Laravolt($this->avatar))->generate();
-
-        return $this;
-    }
-
-    private function attach(): void
-    {
-        $this->avatar->attach($this->path, $this->originalName());
-    }
-
-    private function originalName(): string
-    {
-        return self::Filename.$this->user->id.'.'.self::Extension;
+        return App::runningUnitTests()
+            ? (new Laravolt($this->avatar))->handle()
+            : (new Gravatar($this->avatar))->handle()
+            ?? (new Laravolt($this->avatar))->handle();
     }
 }

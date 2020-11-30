@@ -3,20 +3,28 @@
 namespace LaravelEnso\Avatars\Services\Generators;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Models\Avatar;
 
-class Gravatar extends Generator
+class Gravatar
 {
-    public function generate(): ?string
+    private Avatar $avatar;
+
+    public function __construct(Avatar $avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function handle(): ?Avatar
     {
         if (Http::head($this->url())->status() === 404) {
             return null;
         }
 
-        Storage::put($this->filePath(), file_get_contents($this->url()));
+        $this->avatar->fill([
+            'url' => $this->url(),
+        ])->save();
 
-        return $this->filePath();
+        return $this->avatar;
     }
 
     private function url(): string

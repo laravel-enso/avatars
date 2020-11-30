@@ -9,6 +9,8 @@ class Show extends Controller
 {
     public function __invoke(Avatar $avatar)
     {
-        return $avatar->inline();
+        return $avatar->url
+            ? redirect($avatar->url)
+            : $avatar->inline();
     }
 }
