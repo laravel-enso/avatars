@@ -73,7 +73,7 @@ class Laravolt
         $this->avatar->save();
 
         $this->avatar->attach(
-            new File(Storage::path($this->filePath())),
+            $this->filePath(),
             $this->originalName()
         );
     }
