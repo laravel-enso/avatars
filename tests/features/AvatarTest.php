@@ -36,11 +36,7 @@ class AvatarTest extends TestCase
     public function can_display_avatar()
     {
         $this->get(route('core.avatars.show', [$this->user->avatar->id], false))
-            ->assertStatus(200)
-            ->assertHeader(
-                'content-disposition',
-                'inline; filename='.$this->user->avatar->file->saved_name
-            );
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -52,9 +48,7 @@ class AvatarTest extends TestCase
 
         $this->patch(route('core.avatars.update', $oldAvatar->id, false));
 
-        Storage::assertMissing(
-            $this->filePath($oldAvatar)
-        );
+        Storage::assertMissing($oldAvatar->path);
 
         unset($this->user->avatar);
 
@@ -79,16 +73,7 @@ class AvatarTest extends TestCase
 
         $this->assertNotNull($this->user->avatar);
 
-        Storage::assertExists(
-            $this->filePath($this->user->avatar)
-        );
-    }
-
-    private function filePath($avatar)
-    {
-        return $avatar->folder()
-            .DIRECTORY_SEPARATOR
-            .$avatar->file->saved_name;
+        Storage::assertExists($this->user->avatar->path);
     }
 
     private function createTestFolder()
