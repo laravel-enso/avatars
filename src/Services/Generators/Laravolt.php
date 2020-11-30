@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\Avatars\Services\Generators;
 
-use Illuminate\Http\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
