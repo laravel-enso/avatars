@@ -13,8 +13,7 @@ class GenerateAvatars extends Command
 
     public function handle()
     {
-        User::doesntHave('avatar')->get()
-            ->each->generateAvatar();
+        User::doesntHave('avatar')->get()->each->generateAvatar();
 
         $this->info('Avatars generated successfully');
     }

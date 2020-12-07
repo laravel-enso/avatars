@@ -8,8 +8,6 @@ class Avatar extends JsonResource
 {
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-        ];
+        return ['id' => $this->id];
     }
 }

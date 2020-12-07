@@ -44,9 +44,10 @@ class Avatar extends Model implements Attachable
     {
         return DB::transaction(function () use ($file) {
             $this->delete();
-            $avatar = self::create(['user_id' => Auth::user()->id]);
+            $avatar = Auth::user()->avatar()->create();
+            $avatar->file->upload($file);
 
-            return tap($avatar)->upload($file);
+            return $avatar;
         });
     }
 }

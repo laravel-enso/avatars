@@ -3,10 +3,11 @@
 namespace LaravelEnso\Avatars\Services\Generators;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Models\Avatar;
-use Laravolt\Avatar\Avatar as ImageGenerator;
+use Laravolt\Avatar\Avatar as Generator;
 use Laravolt\Avatar\Facade as Service;
 
 class Laravolt
@@ -14,9 +15,10 @@ class Laravolt
     private const FontSize = 128;
     private const Filename = 'avatar';
     private const Extension = 'jpg';
-    private string $path;
+
+    private $path;
     private Avatar $avatar;
-    private ImageGenerator $generator;
+    private Generator $generator;
 
     public function __construct(Avatar $avatar)
     {
@@ -26,8 +28,7 @@ class Laravolt
     public function handle(): ?Avatar
     {
         $this->generate()
-            ->persist()
-            ->attach();
+            ->persist();
 
         return $this->avatar;
     }
@@ -44,41 +45,36 @@ class Laravolt
 
     private function persist(): self
     {
-        $this->generator->save(Storage::path($this->filePath()));
+        $this->generator->save(Storage::path($this->path()));
+        $this->avatar->save();
+        $this->avatar->file->attach($this->path(), $this->filename());
 
         return $this;
     }
 
-    private function filePath(): string
+    private function background(): string
     {
-        return $this->path
-            ??= $this->avatar->folder().DIRECTORY_SEPARATOR.$this->hashName();
+        return Collection::wrap(Config::get('laravolt.avatar.backgrounds'))->random();
+    }
+
+    private function path(): string
+    {
+        return $this->path ??= "{$this->avatar->folder()}/{$this->hashName()}";
     }
 
     private function hashName(): string
     {
-        return Str::random(40).'.'.static::Extension;
+        $hash = Str::random(40);
+        $extension = self::Extension;
+
+        return "{$hash}.{$extension}";
     }
 
-    private function background(): string
+    private function filename(): string
     {
-        return (new Collection(
-            config('laravolt.avatar.backgrounds')
-        ))->random();
-    }
+        $filename = self::Filename;
+        $extension = self::Extension;
 
-    private function attach(): void
-    {
-        $this->avatar->save();
-
-        $this->avatar->attach(
-            $this->filePath(),
-            $this->originalName()
-        );
-    }
-
-    private function originalName(): string
-    {
-        return self::Filename.$this->avatar->user->id.'.'.self::Extension;
+        return "{$filename}.{$this->avatar->user->id}.{$extension}";
     }
 }

@@ -11,6 +11,6 @@ class Show extends Controller
     {
         return $avatar->url
             ? redirect($avatar->url)
-            : $avatar->inline();
+            : $avatar->file->inline();
     }
 }
