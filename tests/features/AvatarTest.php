@@ -48,13 +48,14 @@ class AvatarTest extends TestCase
 
         $this->patch(route('core.avatars.update', $oldAvatar->id, false));
 
-        $this->assertFalse(Storage::exists($oldAvatar->file->path));
+        Storage::assertMissing($oldAvatar->file->path);
 
         unset($this->user->avatar);
 
         $this->assertNotNull($this->user->avatar);
         $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
-        $this->assertTrue(Storage::exists($this->user->avatar->file->path));
+
+        Storage::assertExists($this->user->avatar->file->path);
     }
 
     /** @test */
@@ -69,7 +70,8 @@ class AvatarTest extends TestCase
         $this->user->load('avatar');
 
         $this->assertNotNull($this->user->avatar);
-        $this->assertTrue(Storage::exists($this->user->avatar->file->path));
+
+        Storage::assertExists($this->user->avatar->file->path);
     }
 
     private function createTestFolder()
