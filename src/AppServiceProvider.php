@@ -4,8 +4,10 @@ namespace LaravelEnso\Avatars;
 
 use Illuminate\Support\ServiceProvider;
 use LaravelEnso\Avatars\Commands\GenerateAvatars;
-use LaravelEnso\Avatars\DynamicRelations\Avatar as Relation;
+use LaravelEnso\Avatars\Dynamics\Methods\GenerateAvatar;
+use LaravelEnso\Avatars\Dynamics\Relations\Avatar as Relation;
 use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Avatars\Observers\Observer;
 use LaravelEnso\Core\Models\User;
 use LaravelEnso\DynamicMethods\Services\Methods;
 
@@ -31,7 +33,10 @@ class AppServiceProvider extends ServiceProvider
     private function relations()
     {
         Avatar::morphMap();
-        Methods::bind(User::class, [Relation::class]);
+
+        Methods::bind(User::class, [Relation::class, GenerateAvatar::class]);
+
+        User::observe(Observer::class);
 
         return $this;
     }
