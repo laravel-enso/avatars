@@ -22,7 +22,7 @@ class Avatar extends Model implements Attachable
 
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
 
-    protected $casts = ['user_id' => 'int'];
+    protected $casts = ['user_id' => 'integer'];
 
     protected $optimizeImages = true;
 
