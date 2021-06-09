@@ -6,15 +6,12 @@ use Illuminate\Support\Facades\App;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Avatars\Services\Generators\Laravolt;
-use LaravelEnso\Core\Models\User;
+use LaravelEnso\Users\Models\User;
 
 class DefaultAvatar
 {
-    private $user;
-
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     public function create(): Avatar

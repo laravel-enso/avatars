@@ -8,11 +8,8 @@ use LaravelEnso\Avatars\Models\Avatar;
 
 class Gravatar
 {
-    private Avatar $avatar;
-
-    public function __construct(Avatar $avatar)
+    public function __construct(private Avatar $avatar)
     {
-        $this->avatar = $avatar;
     }
 
     public function handle(): ?Avatar

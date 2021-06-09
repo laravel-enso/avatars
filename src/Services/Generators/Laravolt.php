@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Models\Avatar;
-use Laravolt\Avatar\Avatar as Generator;
 use Laravolt\Avatar\Facade as Service;
 
 class Laravolt
@@ -16,13 +15,10 @@ class Laravolt
     private const Filename = 'avatar';
     private const Extension = 'jpg';
 
-    private $path;
-    private Avatar $avatar;
-    private Generator $generator;
-
-    public function __construct(Avatar $avatar)
-    {
-        $this->avatar = $avatar;
+    public function __construct(
+        private Avatar $avatar,
+        private ?string $path = null,
+    ) {
     }
 
     public function handle(): ?Avatar
@@ -35,17 +31,17 @@ class Laravolt
 
     private function generate(): self
     {
-        $this->generator = Service::create($this->avatar->user->person->name)
+        Service::create($this->avatar->user->person->name)
             ->setDimension(Avatar::Width, Avatar::Height)
             ->setFontSize(self::FontSize)
-            ->setBackground($this->background());
+            ->setBackground($this->background())
+            ->save(Storage::path($this->path()));
 
         return $this;
     }
 
     private function persist(): self
     {
-        $this->generator->save(Storage::path($this->path()));
         $this->avatar->save();
         $this->avatar->file->attach($this->path(), $this->filename());
 
@@ -59,7 +55,8 @@ class Laravolt
 
     private function path(): string
     {
-        return $this->path ??= "{$this->avatar->folder()}/{$this->hashName()}";
+        return $this->path
+            ??= "{$this->avatar->folder()}/{$this->hashName()}";
     }
 
     private function hashName(): string

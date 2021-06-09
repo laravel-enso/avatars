@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\Files\Contracts\Attachable;
 use LaravelEnso\Files\Traits\HasFile;
 use LaravelEnso\Helpers\Traits\CascadesMorphMap;
+use LaravelEnso\Users\Models\User;
 
 class Avatar extends Model implements Attachable
 {

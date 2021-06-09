@@ -3,7 +3,7 @@
 namespace LaravelEnso\Avatars\Commands;
 
 use Illuminate\Console\Command;
-use LaravelEnso\Core\Models\User;
+use LaravelEnso\Users\Models\User;
 
 class GenerateAvatars extends Command
 {

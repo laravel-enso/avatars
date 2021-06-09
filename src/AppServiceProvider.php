@@ -8,8 +8,8 @@ use LaravelEnso\Avatars\Dynamics\Methods\GenerateAvatar;
 use LaravelEnso\Avatars\Dynamics\Relations\Avatar as Relation;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Avatars\Observers\Observer;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\DynamicMethods\Services\Methods;
+use LaravelEnso\Users\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {

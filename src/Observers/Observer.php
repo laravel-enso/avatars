@@ -2,7 +2,7 @@
 
 namespace LaravelEnso\Avatars\Observers;
 
-use LaravelEnso\Core\Models\User;
+use LaravelEnso\Users\Models\User;
 
 class Observer
 {

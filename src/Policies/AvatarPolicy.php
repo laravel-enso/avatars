@@ -4,7 +4,7 @@ namespace LaravelEnso\Avatars\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use LaravelEnso\Avatars\Models\Avatar;
-use LaravelEnso\Core\Models\User;
+use LaravelEnso\Users\Models\User;
 
 class AvatarPolicy
 {

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use LaravelEnso\Core\Models\User;
+use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
 
 class AvatarTest extends TestCase
@@ -16,8 +16,6 @@ class AvatarTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->withoutExceptionHandling();
 
         $this->seed()
             ->actingAs($this->user = User::first());
