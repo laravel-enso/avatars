@@ -2,11 +2,11 @@
 
 namespace LaravelEnso\Avatars\Observers;
 
-use LaravelEnso\Users\Models\User;
+use LaravelEnso\Users\Models\User as Model;
 
-class Observer
+class User
 {
-    public function created(User $user)
+    public function created(Model $user)
     {
         $user->generateAvatar();
     }

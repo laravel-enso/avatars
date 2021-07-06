@@ -8,29 +8,29 @@ use LaravelEnso\Avatars\Models\Avatar;
 
 class Gravatar
 {
+    private const URL = 'https://www.gravatar.com/avatar';
+
     public function __construct(private Avatar $avatar)
     {
     }
 
     public function handle(): ?Avatar
     {
-        if (Http::head($this->url())->ok()) {
-            $this->avatar->fill(['url' => $this->url()])->save();
-
-            return $this->avatar;
-        }
-
-        return null;
+        return Http::head($this->url())->ok()
+            ? tap($this->avatar->fill(['url' => $this->url()]))->save()
+            : null;
     }
 
     private function url(): string
     {
-        return "https://www.gravatar.com/avatar/{$this->hash()}?{$this->query()}";
+        $url = self::URL;
+
+        return "$url/{$this->hash()}?{$this->query()}";
     }
 
     private function hash(): string
     {
-        return md5(Str::of($this->avatar->user->email)->lower());
+        return md5(Str::lower($this->avatar->user->email));
     }
 
     private function query(): string
