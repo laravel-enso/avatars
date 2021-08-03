@@ -37,7 +37,6 @@ class AppServiceProvider extends ServiceProvider
 
         Methods::bind(User::class, [Relation::class, GenerateAvatar::class]);
 
-        // User::observe(Observer::class);
         App::make(User::class)::observe(Observer::class);
 
         return $this;
