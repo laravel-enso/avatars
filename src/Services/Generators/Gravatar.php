@@ -5,6 +5,7 @@ namespace LaravelEnso\Avatars\Services\Generators;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Models\Avatar;
+use Throwable;
 
 class Gravatar
 {
@@ -16,7 +17,13 @@ class Gravatar
 
     public function handle(): ?Avatar
     {
-        return Http::head($this->url())->ok()
+        try {
+            $ok = Http::head($this->url())->ok();
+        } catch (Throwable) {
+            return null;
+        }
+
+        return $ok
             ? tap($this->avatar->fill(['url' => $this->url()]))->save()
             : null;
     }
