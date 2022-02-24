@@ -4,7 +4,7 @@ namespace LaravelEnso\Avatars\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ValidateAvatarRequest extends FormRequest
+class ValidateAvatar extends FormRequest
 {
     public function authorize()
     {
