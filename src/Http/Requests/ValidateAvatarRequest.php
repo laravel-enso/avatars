@@ -13,6 +13,6 @@ class ValidateAvatarRequest extends FormRequest
 
     public function rules()
     {
-        return ['avatar' => 'required|image'];
+        return ['avatar' => 'required|image|dimensions:ratio=1'];
     }
 }

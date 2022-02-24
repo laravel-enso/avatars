@@ -16,7 +16,5 @@ class Update extends Controller
         $this->authorize('update', $avatar);
 
         $avatar = $request->user()->generateAvatar();
-
-        return ['avatarId' => $avatar->id];
     }
 }

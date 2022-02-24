@@ -16,18 +16,23 @@ class DefaultAvatar
 
     public function create(): Avatar
     {
-        return App::runningUnitTests()
+        $oldFile = $this->user->avatar?->file;
+
+        $avatar = App::runningUnitTests()
             ? $this->laravolt()
-            : $this->gravatar()
-            ?? $this->laravolt();
+            : $this->gravatar() ?? $this->laravolt();
+
+        $oldFile?->delete();
+
+        return $avatar;
     }
 
-    private function laravolt()
+    private function laravolt(): Avatar
     {
         return (new Laravolt($this->avatar()))->handle();
     }
 
-    private function gravatar()
+    private function gravatar(): ?Avatar
     {
         return (new Gravatar($this->avatar()))->handle();
     }

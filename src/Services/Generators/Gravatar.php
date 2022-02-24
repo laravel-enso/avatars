@@ -18,14 +18,28 @@ class Gravatar
     public function handle(): ?Avatar
     {
         try {
-            $ok = Http::head($this->url())->ok();
+            $gravatar = Http::head($this->url())->ok();
         } catch (Throwable) {
             return null;
         }
 
-        return $ok
-            ? tap($this->avatar->fill(['url' => $this->url()]))->save()
+        return $gravatar
+            ? $this->gravatar()
             : null;
+    }
+
+    private function gravatar(): Avatar
+    {
+        $file = $this->avatar->file;
+
+        $this->avatar->fill([
+            'url' => $this->url(),
+            'file_id' => null,
+        ])->save();
+
+        $file?->delete();
+
+        return $this->avatar;
     }
 
     private function url(): string
@@ -43,7 +57,7 @@ class Gravatar
     private function query(): string
     {
         $params = [
-            'size' => Avatar::Height,
+            'size' => $this->avatar->imageHeight(),
             'default' => 404,
         ];
 

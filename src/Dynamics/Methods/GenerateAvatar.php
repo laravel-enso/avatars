@@ -16,10 +16,6 @@ class GenerateAvatar implements Method
 
     public function closure(): Closure
     {
-        return function (): Avatar {
-            $this->avatar?->delete();
-
-            return (new DefaultAvatar($this))->create();
-        };
+        return fn (): Avatar => (new DefaultAvatar($this))->create();
     }
 }

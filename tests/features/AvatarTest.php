@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
+use LaravelEnso\Files\Models\File;
 use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
 
@@ -42,17 +43,15 @@ class AvatarTest extends TestCase
     {
         $this->user->load('avatar.file');
 
-        $oldAvatar = $this->user->avatar;
+        $oldFile = $this->user->avatar->file;
 
-        $this->patch(route('core.avatars.update', $oldAvatar->id, false));
+        $this->patch(route('core.avatars.update', $this->user->avatar->id, false));
 
-        Storage::assertMissing($oldAvatar->file->path);
+        $this->assertTrue(File::whereId($oldFile->id)->doesntExist());
 
         unset($this->user->avatar);
 
-        $this->assertNotNull($this->user->avatar);
-        $this->assertNotEquals($oldAvatar->id, $this->user->avatar->id);
-
+        $this->assertNotNull($this->user->avatar->file);
         Storage::assertExists($this->user->avatar->file->path);
     }
 

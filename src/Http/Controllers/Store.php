@@ -16,6 +16,6 @@ class Store extends Controller
 
         $this->authorize('update', $avatar);
 
-        return $avatar->store($request->file('avatar'));
+        $avatar->store($request->file('avatar'));
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LaravelEnso\Avatars\Models\Avatar;
+use LaravelEnso\Files\Models\File;
+use LaravelEnso\Files\Models\Type;
 use Laravolt\Avatar\Facade as Service;
 
 class Laravolt
@@ -32,7 +34,7 @@ class Laravolt
     private function generate(): self
     {
         Service::create($this->avatar->user->person->name)
-            ->setDimension(Avatar::Width, Avatar::Height)
+            ->setDimension($this->avatar->imageWidth(), $this->avatar->imageHeight())
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->save(Storage::path($this->path()));
@@ -40,12 +42,14 @@ class Laravolt
         return $this;
     }
 
-    private function persist(): self
+    private function persist(): void
     {
-        $this->avatar->save();
-        $this->avatar->file->attach($this->path(), $this->filename());
+        $file = File::attach($this->path(), $this->filename());
 
-        return $this;
+        $this->avatar->fill([
+            'url' => null,
+            'file_id' => $file->id,
+        ])->save();
     }
 
     private function background(): string
@@ -55,8 +59,9 @@ class Laravolt
 
     private function path(): string
     {
-        return $this->path
-            ??= "{$this->avatar->folder()}/{$this->hashName()}";
+        $folder = Type::for(Avatar::class)->folder;
+
+        return $this->path ??= "{$folder}/{$this->hashName()}";
     }
 
     private function hashName(): string

@@ -3,51 +3,65 @@
 namespace LaravelEnso\Avatars\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use LaravelEnso\Files\Contracts\Attachable;
-use LaravelEnso\Files\Traits\HasFile;
-use LaravelEnso\Helpers\Traits\CascadesMorphMap;
+use LaravelEnso\Files\Contracts\Extensions;
+use LaravelEnso\Files\Contracts\MimeTypes;
+use LaravelEnso\Files\Contracts\OptimizesImages;
+use LaravelEnso\Files\Contracts\ResizesImages;
+use LaravelEnso\Files\Models\File;
 use LaravelEnso\Users\Models\User;
 
-class Avatar extends Model implements Attachable
+class Avatar extends Model implements Attachable, Extensions, MimeTypes, ResizesImages, OptimizesImages
 {
-    use CascadesMorphMap, HasFile;
-
-    public const Width = 250;
-    public const Height = 250;
-
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
 
     protected $casts = ['user_id' => 'integer'];
-
-    protected $optimizeImages = true;
-
-    protected $resizeImages = [
-        'width' => self::Width,
-        'height' => self::Height,
-    ];
-
-    protected $mimeTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
-
-    protected $folder = 'avatars';
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function store(UploadedFile $file)
+    public function file(): Relation
     {
-        return DB::transaction(function () use ($file) {
-            $this->delete();
-            $avatar = Auth::user()->avatar()->create();
-            $avatar->file->upload($file);
+        return $this->belongsTo(File::class);
+    }
 
-            return $avatar;
-        });
+    public function store(UploadedFile $uploadedFile): self
+    {
+        $oldFile = $this->file;
+
+        $file = File::upload($this, $uploadedFile);
+
+        $this->fill(['url' => null])
+            ->file()->associate($file)->save();
+
+        $oldFile?->delete();
+
+        return $this;
+    }
+
+    public function extensions(): array
+    {
+        return ['jpg', 'jpeg', 'png', 'gif'];
+    }
+
+    public function mimeTypes(): array
+    {
+        return ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+    }
+
+    public function imageWidth(): int
+    {
+        return 250;
+    }
+
+    public function imageHeight(): int
+    {
+        return 250;
     }
 }
