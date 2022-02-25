@@ -19,7 +19,7 @@ class Laravolt
     private string $hashName;
 
     public function __construct(
-        private Avatar  $avatar,
+        private Avatar $avatar,
         private ?string $path = null,
     ) {
     }
