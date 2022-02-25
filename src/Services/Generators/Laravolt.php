@@ -18,10 +18,7 @@ class Laravolt
     private const Extension = 'jpg';
     private string $hashName;
 
-    public function __construct(
-        private Avatar  $avatar,
-        private ?string $path = null,
-    ) {
+    public function __construct(private Avatar  $avatar) {
     }
 
     public function handle(): ?Avatar
@@ -60,9 +57,9 @@ class Laravolt
 
     private function path(): string
     {
-        $folder = Type::for(Avatar::class)->folder;
+        $folder = Type::for(Avatar::class)->folder();
 
-        return $this->path ??= "{$folder}/{$this->hashName()}";
+        return "{$folder}/{$this->hashName()}";
     }
 
     private function hashName(): string
