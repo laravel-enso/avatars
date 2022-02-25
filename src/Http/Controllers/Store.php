@@ -4,13 +4,13 @@ namespace LaravelEnso\Avatars\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
-use LaravelEnso\Avatars\Http\Requests\ValidateAvatarRequest;
+use LaravelEnso\Avatars\Http\Requests\ValidateAvatar;
 
 class Store extends Controller
 {
     use AuthorizesRequests;
 
-    public function __invoke(ValidateAvatarRequest $request)
+    public function __invoke(ValidateAvatar $request)
     {
         $avatar = $request->user()->avatar;
 
