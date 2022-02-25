@@ -52,7 +52,7 @@ class AvatarTest extends TestCase
         unset($this->user->avatar);
 
         $this->assertNotNull($this->user->avatar->file);
-        Storage::assertExists($this->user->avatar->file->path);
+        Storage::assertExists($this->user->avatar->file->path());
     }
 
     /** @test */
@@ -68,7 +68,10 @@ class AvatarTest extends TestCase
 
         $this->assertNotNull($this->user->avatar);
 
-        Storage::assertExists($this->user->avatar->file->path);
+        $path = Config::get('enso.files.testingFolder').'/'.
+            $this->user->avatar->file->saved_name;
+
+        Storage::assertExists($path);
     }
 
     private function createTestFolder()

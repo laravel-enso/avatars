@@ -16,9 +16,10 @@ class Laravolt
     private const FontSize = 128;
     private const Filename = 'avatar';
     private const Extension = 'jpg';
+    private string $hashName;
 
     public function __construct(
-        private Avatar $avatar,
+        private Avatar  $avatar,
         private ?string $path = null,
     ) {
     }
@@ -44,7 +45,7 @@ class Laravolt
 
     private function persist(): void
     {
-        $file = File::attach($this->path(), $this->filename());
+        $file = File::attach($this->avatar, $this->hashName(), $this->filename());
 
         $this->avatar->fill([
             'url' => null,
@@ -66,10 +67,10 @@ class Laravolt
 
     private function hashName(): string
     {
-        $hash = Str::random(40);
-        $extension = self::Extension;
-
-        return "{$hash}.{$extension}";
+        return $this->hashName ??= Str::of('.')
+            ->prepend(Str::random(40))
+            ->append(self::Extension)
+            ->__toString();
     }
 
     private function filename(): string
