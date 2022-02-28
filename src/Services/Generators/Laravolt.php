@@ -18,7 +18,8 @@ class Laravolt
     private const Extension = 'jpg';
     private string $hashName;
 
-    public function __construct(private Avatar  $avatar) {
+    public function __construct(private Avatar $avatar)
+    {
     }
 
     public function handle(): ?Avatar
