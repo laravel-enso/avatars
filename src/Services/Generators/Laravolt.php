@@ -57,9 +57,7 @@ class Laravolt
 
     private function path(): string
     {
-        $folder = Type::for(Avatar::class)->folder();
-
-        return "{$folder}/{$this->hashName()}";
+        return Type::for(Avatar::class)->path($this->hashName());
     }
 
     private function hashName(): string
