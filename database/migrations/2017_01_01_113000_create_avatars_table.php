@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('file_id')->nullable();
             $table->foreign('file_id')->references('id')->on('files')
-                ->onUpdate('restrict')->onDelete('restrict');
+                ->onUpdate('restrict')->onDelete('SET NULL');
 
             $table->string('url')->nullable();
 
