@@ -30,14 +30,10 @@ class Gravatar
 
     private function gravatar(): Avatar
     {
-        $file = $this->avatar->file;
-
         $this->avatar->fill([
             'url' => $this->url(),
             'file_id' => null,
         ])->save();
-
-        $file?->delete();
 
         return $this->avatar;
     }
