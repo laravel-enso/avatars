@@ -10,11 +10,11 @@ return new class extends Migration {
         Schema::create('avatars', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id')->unsigned()->unique()->index();
+            $table->integer('user_id')->unsigned()->unique();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
 
-            $table->unsignedBigInteger('file_id')->nullable();
+            $table->unsignedBigInteger('file_id')->nullable()->unique();
             $table->foreign('file_id')->references('id')->on('files')
                 ->onUpdate('restrict')->onDelete('restrict');
 
