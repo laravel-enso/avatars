@@ -19,6 +19,6 @@ class AvatarPolicy
 
     public function update(User $user, Avatar $avatar): bool
     {
-        return ! $user->isImpersonating() && $user->id === $avatar->user_id;
+        return !$user->isImpersonating() && $user->id === $avatar->user_id;
     }
 }

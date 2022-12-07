@@ -31,7 +31,7 @@ class Gravatar
     private function gravatar(): Avatar
     {
         $this->avatar->fill([
-            'url' => $this->url(),
+            'url'     => $this->url(),
             'file_id' => null,
         ])->save();
 
@@ -53,7 +53,7 @@ class Gravatar
     private function query(): string
     {
         $params = [
-            'size' => $this->avatar->imageHeight(),
+            'size'    => $this->avatar->imageHeight(),
             'default' => 404,
         ];
 
