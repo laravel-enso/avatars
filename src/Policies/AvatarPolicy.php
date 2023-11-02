@@ -12,7 +12,7 @@ class AvatarPolicy
 
     public function before(User $user)
     {
-        if ($user->isAdmin() || $user->isSupervisor()) {
+        if ($user->isSuperior()) {
             return true;
         }
     }
