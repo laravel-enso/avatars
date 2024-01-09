@@ -5,10 +5,7 @@ namespace LaravelEnso\Avatars;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use LaravelEnso\Avatars\Commands\GenerateAvatars;
-use LaravelEnso\Avatars\Dynamics\Methods\GenerateAvatar;
-use LaravelEnso\Avatars\Dynamics\Relations\Avatar as Relation;
 use LaravelEnso\Avatars\Observers\User as Observer;
-use LaravelEnso\DynamicMethods\Services\Methods;
 use LaravelEnso\Users\Models\User;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->load()
-            ->relations()
+            ->observe()
             ->publish()
             ->commands(GenerateAvatars::class);
     }
@@ -30,10 +27,8 @@ class AppServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function relations()
+    private function observe()
     {
-        Methods::bind(User::class, [Relation::class, GenerateAvatar::class]);
-
         App::make(User::class)::observe(Observer::class);
 
         return $this;

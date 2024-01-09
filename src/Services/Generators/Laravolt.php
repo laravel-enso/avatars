@@ -46,7 +46,7 @@ class Laravolt
         $file = File::attach($this->avatar, $this->hashName(), $this->filename());
 
         $this->avatar->fill([
-            'url' => null,
+            'url'     => null,
             'file_id' => $file->id,
         ])->save();
     }
