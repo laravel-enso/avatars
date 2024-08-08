@@ -19,8 +19,6 @@ class Avatar extends Model implements Attachable, Extensions, MimeTypes, Resizes
 
     protected $hidden = ['user_id', 'created_at', 'updated_at'];
 
-    protected $casts = ['user_id' => 'integer'];
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -63,5 +61,12 @@ class Avatar extends Model implements Attachable, Extensions, MimeTypes, Resizes
     public function imageHeight(): int
     {
         return 250;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'user_id' => 'integer',
+        ];
     }
 }
