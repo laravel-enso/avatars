@@ -14,7 +14,7 @@ return new class() extends Migration {
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
 
-            $table->unsignedBigInteger('file_id')->nullable()->unique();
+            $table->bigInteger('file_id')->unsigned()->nullable()->unique();
             $table->foreign('file_id')->references('id')->on('files')
                 ->onUpdate('restrict')->onDelete('restrict');
 
