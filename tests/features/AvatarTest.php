@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Files\Models\File;
 use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AvatarTest extends TestCase
 {
@@ -31,14 +32,14 @@ class AvatarTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function can_display_avatar()
     {
         $this->get(route('core.avatars.show', [$this->user->avatar->id], false))
             ->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function can_update_avatar()
     {
         $this->user->load('avatar.file');
@@ -55,7 +56,7 @@ class AvatarTest extends TestCase
         Storage::assertExists($this->user->avatar->file->path());
     }
 
-    /** @test */
+    #[Test]
     public function can_store_avatar()
     {
         $this->user->load('avatar');
