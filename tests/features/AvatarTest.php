@@ -46,7 +46,7 @@ class AvatarTest extends TestCase
     public function redirects_to_avatar_url_when_avatar_is_remote()
     {
         $this->user->avatar->update([
-            'url' => 'https://example.test/avatar.png',
+            'url'     => 'https://example.test/avatar.png',
             'file_id' => null,
         ]);
 
@@ -106,7 +106,7 @@ class AvatarTest extends TestCase
     public function superior_can_regenerate_another_users_avatar()
     {
         $superior = User::factory()->create([
-            'role_id' => Roles::Admin,
+            'role_id'   => Roles::Admin,
             'is_active' => true,
         ]);
         $target = User::factory()->create(['is_active' => true]);
@@ -180,7 +180,7 @@ class AvatarTest extends TestCase
 
     private function createTestFolder(): void
     {
-        if (! Storage::has(Config::get('enso.files.testingFolder'))) {
+        if (!Storage::has(Config::get('enso.files.testingFolder'))) {
             Storage::makeDirectory(Config::get('enso.files.testingFolder'));
         }
     }
