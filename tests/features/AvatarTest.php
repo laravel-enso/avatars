@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Files\Models\File;
 use LaravelEnso\Users\Models\User;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class AvatarTest extends TestCase
 {
