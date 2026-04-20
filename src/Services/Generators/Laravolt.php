@@ -34,7 +34,7 @@ class Laravolt
     {
         $this->save();
 
-        if (! Storage::exists($this->path())) {
+        if (!Storage::exists($this->path())) {
             $this->save();
         }
 
@@ -96,7 +96,7 @@ class Laravolt
     {
         $directory = dirname($this->path());
 
-        if ($directory !== '.' && ! Storage::has($directory)) {
+        if ($directory !== '.' && !Storage::has($directory)) {
             Storage::makeDirectory($directory);
         }
     }
