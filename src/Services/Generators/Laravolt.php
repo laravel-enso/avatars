@@ -83,7 +83,7 @@ class Laravolt
     {
         $directory = dirname($this->path());
 
-        if ($directory !== '.' && ! Storage::has($directory)) {
+        if ($directory !== '.' && !Storage::has($directory)) {
             Storage::makeDirectory($directory);
         }
     }
