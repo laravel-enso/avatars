@@ -17,8 +17,6 @@ The package also generates default avatars automatically. It prefers Gravatar wh
 
 The frontend integration lives primarily in the Enso user profile experience and reusable avatar components from `@enso-ui/users`.
 
-![Avatar profile screenshot](.github/screenshots/avatars-profile.png)
-
 ## Installation
 
 This package comes pre-installed in Laravel Enso applications that support user profile avatars.
