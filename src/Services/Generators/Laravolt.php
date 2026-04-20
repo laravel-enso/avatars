@@ -32,15 +32,28 @@ class Laravolt
 
     private function generate(): self
     {
+        $this->save();
+
+        if (! Storage::exists($this->path())) {
+            $this->save();
+        }
+
+        return $this;
+    }
+
+    private function save(): void
+    {
         $this->ensureDirectoryExists();
 
-        Service::create($this->avatar->user->person->name)
+        $image = Service::create($this->avatar->user->person->name)
             ->setDimension($this->avatar->imageWidth(), $this->avatar->imageHeight())
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
-            ->save(Storage::path($this->path()));
+            ->getImageObject()
+            ->toJpeg()
+            ->toString();
 
-        return $this;
+        Storage::put($this->path(), $image);
     }
 
     private function persist(): void
@@ -83,7 +96,7 @@ class Laravolt
     {
         $directory = dirname($this->path());
 
-        if ($directory !== '.' && !Storage::has($directory)) {
+        if ($directory !== '.' && ! Storage::has($directory)) {
             Storage::makeDirectory($directory);
         }
     }

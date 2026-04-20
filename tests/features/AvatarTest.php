@@ -29,7 +29,8 @@ class AvatarTest extends TestCase
 
     protected function tearDown(): void
     {
-        Storage::deleteDirectory(Config::get('enso.files.testingFolder'));
+        File::query()->get()
+            ->each(fn (File $file) => Storage::delete($file->path()));
 
         parent::tearDown();
     }
@@ -171,6 +172,18 @@ class AvatarTest extends TestCase
         $this->assertNotNull($user->fresh()->avatar);
         $this->assertNotNull($user->fresh()->avatar->file);
         $this->assertNull($user->fresh()->avatar->url);
+        Storage::assertExists($user->fresh()->avatar->file->path());
+    }
+
+    #[Test]
+    public function creates_default_avatar_when_a_user_is_created_after_the_testing_folder_was_deleted()
+    {
+        Storage::deleteDirectory(Config::get('enso.files.testingFolder'));
+
+        $user = User::factory()->create(['is_active' => true]);
+
+        $this->assertNotNull($user->fresh()->avatar);
+        $this->assertNotNull($user->fresh()->avatar->file);
         Storage::assertExists($user->fresh()->avatar->file->path());
     }
 
