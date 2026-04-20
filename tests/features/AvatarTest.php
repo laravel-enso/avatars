@@ -152,6 +152,18 @@ class AvatarTest extends TestCase
     }
 
     #[Test]
+    public function recreates_the_testing_folder_when_generating_an_avatar()
+    {
+        Storage::deleteDirectory(Config::get('enso.files.testingFolder'));
+
+        $avatar = $this->user->generateAvatar();
+
+        $this->assertInstanceOf(Avatar::class, $avatar);
+        $this->assertNotNull($avatar->fresh()->file);
+        Storage::assertExists($avatar->fresh()->file->path());
+    }
+
+    #[Test]
     public function creates_default_avatar_when_user_is_created()
     {
         $user = User::factory()->create(['is_active' => true]);

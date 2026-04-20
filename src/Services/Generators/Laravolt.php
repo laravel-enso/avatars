@@ -32,6 +32,8 @@ class Laravolt
 
     private function generate(): self
     {
+        $this->ensureDirectoryExists();
+
         Service::create($this->avatar->user->person->name)
             ->setDimension($this->avatar->imageWidth(), $this->avatar->imageHeight())
             ->setFontSize(self::FontSize)
@@ -75,5 +77,14 @@ class Laravolt
         $extension = self::Extension;
 
         return "{$filename}.{$this->avatar->user->id}.{$extension}";
+    }
+
+    private function ensureDirectoryExists(): void
+    {
+        $directory = dirname($this->path());
+
+        if ($directory !== '.' && ! Storage::has($directory)) {
+            Storage::makeDirectory($directory);
+        }
     }
 }
