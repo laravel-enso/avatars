@@ -14,7 +14,8 @@ use Tests\TestCase;
 
 class AvatarTest extends TestCase
 {
-    use EnsuresTestingFolder, RefreshDatabase;
+    use EnsuresTestingFolder;
+    use RefreshDatabase;
 
     private User $user;
 
