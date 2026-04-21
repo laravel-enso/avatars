@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Files\Models\File;
+use LaravelEnso\Helpers\Traits\EnsuresTestingFolder;
 use LaravelEnso\Roles\Enums\Roles;
 use LaravelEnso\Users\Models\User;
 use PHPUnit\Framework\Attributes\Test;
@@ -13,7 +14,7 @@ use Tests\TestCase;
 
 class AvatarTest extends TestCase
 {
-    use RefreshDatabase;
+    use EnsuresTestingFolder, RefreshDatabase;
 
     private User $user;
 
@@ -21,10 +22,10 @@ class AvatarTest extends TestCase
     {
         parent::setUp();
 
+        $this->ensureTestingFolder();
+
         $this->seed()
             ->actingAs($this->user = User::first());
-
-        $this->createTestFolder();
     }
 
     protected function tearDown(): void
@@ -201,12 +202,5 @@ class AvatarTest extends TestCase
 
         $this->assertNotNull($user->fresh()->avatar);
         $this->assertNotNull($user->fresh()->avatar->file);
-    }
-
-    private function createTestFolder(): void
-    {
-        if (!Storage::has(Config::get('enso.files.testingFolder'))) {
-            Storage::makeDirectory(Config::get('enso.files.testingFolder'));
-        }
     }
 }
