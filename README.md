@@ -29,6 +29,8 @@ composer require laravel-enso/avatars
 
 The package auto-registers its service providers, loads migrations, registers API routes, observes user creation, and exposes the avatar generation command.
 
+The current release uses Laravolt Avatar 6.5 and Laravel Enso Image Transformer 2.5.6, both backed by Intervention Image 4.
+
 Run the migrations after installation:
 
 ```bash

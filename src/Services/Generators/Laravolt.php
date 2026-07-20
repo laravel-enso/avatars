@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Format;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Files\Models\File;
 use LaravelEnso\Files\Models\Type;
@@ -50,7 +51,7 @@ class Laravolt
             ->setFontSize(self::FontSize)
             ->setBackground($this->background())
             ->getImageObject()
-            ->toJpeg()
+            ->encodeUsingFormat(Format::JPEG)
             ->toString();
 
         Storage::put($this->path(), $image);
