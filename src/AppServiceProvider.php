@@ -38,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
 
     private function load()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/avatars.php', 'enso.avatars');
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
@@ -54,6 +56,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function publish()
     {
+        $this->publishes([
+            __DIR__.'/../config' => config_path('enso'),
+        ], ['avatars-config', 'enso-config']);
+
         $this->publishes([
             __DIR__.'/../storage/app' => storage_path('app'),
         ], 'avatars-storage');

@@ -43,6 +43,15 @@ If you need the package storage scaffolding, publish it with:
 php artisan vendor:publish --tag=avatars-storage
 ```
 
+Publish the avatar configuration with:
+
+```bash
+php artisan vendor:publish --tag=avatars-config
+```
+
+Set `enso.avatars.useGravatar` to `false` to generate local Laravolt avatars
+without probing Gravatar. The option defaults to `true`.
+
 ## Features
 
 - Adds a one-to-one avatar relation to `LaravelEnso\Users\Models\User` through dynamic methods.

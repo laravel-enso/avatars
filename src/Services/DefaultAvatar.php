@@ -3,6 +3,7 @@
 namespace LaravelEnso\Avatars\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use LaravelEnso\Avatars\Models\Avatar;
 use LaravelEnso\Avatars\Services\Generators\Gravatar;
 use LaravelEnso\Avatars\Services\Generators\Laravolt;
@@ -10,15 +11,14 @@ use LaravelEnso\Users\Models\User;
 
 class DefaultAvatar
 {
-    public function __construct(private User $user)
-    {
-    }
+    public function __construct(private User $user) {}
 
     public function create(): Avatar
     {
         $oldFile = $this->user->avatar?->file;
 
         $avatar = App::runningUnitTests()
+            || ! Config::get('enso.avatars.useGravatar')
             ? $this->laravolt()
             : $this->gravatar() ?? $this->laravolt();
 
