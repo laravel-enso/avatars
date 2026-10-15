@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\Avatars\Services;
 
+use Illuminate\Support\Str;
 use Intervention\Image\Alignment;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
@@ -11,6 +12,15 @@ use Laravolt\Avatar\Avatar;
 
 class LaravoltAvatar extends Avatar
 {
+    public function toSvg(): string
+    {
+        $svg = parent::toSvg();
+        $initials = $this->getInitial();
+        $escaped = htmlspecialchars($initials, ENT_QUOTES | ENT_XML1 | ENT_SUBSTITUTE, 'UTF-8');
+
+        return Str::replace('>'.$initials.'</text>', '>'.$escaped.'</text>', $svg);
+    }
+
     public function buildAvatar(): static
     {
         $this->buildInitial();
