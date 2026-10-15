@@ -13,7 +13,7 @@ Avatars is Laravel Enso's user avatar package.
 
 It attaches one avatar record to each user, exposes authenticated endpoints for viewing, uploading, and regenerating avatars, and integrates with Enso's file pipeline so custom uploads are stored and transformed consistently.
 
-The package also generates default avatars automatically. It prefers Gravatar when a public image exists for the user's email address and falls back to a locally generated Laravolt avatar when it does not.
+The package also generates default avatars automatically. It prefers Gravatar when a public image exists for the user's email address and falls back to an SVG rendered on demand with Laravolt when it does not. SVG fallbacks do not create image files or file records.
 
 The frontend integration lives primarily in the Enso user profile experience and reusable avatar components from `@enso-ui/users`.
 
@@ -49,15 +49,17 @@ Publish the avatar configuration with:
 php artisan vendor:publish --tag=avatars-config
 ```
 
-Set `enso.avatars.useGravatar` to `false` to generate local Laravolt avatars
-without probing Gravatar. The option defaults to `true`.
+Set `enso.avatars.useGravatar` to `false` to use SVG fallbacks without probing Gravatar. The option defaults to `true`.
+
+Set `enso.avatars.background` to change the shared SVG background color (default: `#64748b`). The legacy `laravolt.avatar.backgrounds` palette is ignored for these fallbacks. Initials reflect the user's current name and are escaped for XML.
 
 ## Features
 
 - Adds a one-to-one avatar relation to `LaravelEnso\Users\Models\User` through dynamic methods.
 - Adds a `generateAvatar()` dynamic method to users for regenerating their default avatar.
 - Generates a default avatar automatically whenever a new user is created.
-- Prefers Gravatar and falls back to a generated Laravolt image when no Gravatar exists.
+- Prefers Gravatar and falls back to a dynamic SVG when no Gravatar exists.
+- Uses one configurable background color for SVG fallbacks without storing generated images.
 - Stores uploaded avatar files through `laravel-enso/files`.
 - Deletes the previously attached file when an avatar is replaced.
 - Enforces square image uploads.
@@ -79,7 +81,7 @@ Store a custom uploaded avatar for the authenticated user:
 use Illuminate\Http\UploadedFile;
 
 $request->validate([
-    'avatar' => 'required|image:allow_svg|dimensions:ratio=1',
+    'avatar' => 'required|image|dimensions:ratio=1',
 ]);
 
 $request->user()->avatar->store(
@@ -164,6 +166,23 @@ Generate missing avatars for users without one:
 ```bash
 php artisan enso:avatars:generate
 ```
+
+## Upgrading to 4.6
+
+Update the package, then run the standard Enso upgrade command:
+
+```bash
+composer update laravel-enso/avatars
+php artisan enso:upgrade
+```
+
+The `LegacyAvatars` upgrade replaces legacy candidates with SVG fallbacks and permanently deletes their file records and stored images. It selects avatars without a remote URL whose attached file belongs to the avatar type, has MIME type `image/jpeg`, and has the exact original name `avatar.<user_id>.jpg`.
+
+This naming convention is a heuristic: an uploaded JPEG with that exact name is also deleted. Review candidates and retain a backup before running the upgrade if such uploads may exist. Other uploads and Gravatar URLs are preserved. No file-size or `created_by` threshold is used.
+
+The upgrade is repeatable and also handles missing physical files. A storage deletion returning `false` does not stop the upgrade; the avatar association and file record are still removed, so that physical file may remain orphaned.
+
+Existing file-backed avatars continue to display until replaced or processed by the upgrade. New users and explicit default-avatar regeneration use Gravatar or SVG immediately. Both `file_id` and `url` are null for an SVG fallback; the avatar record and show endpoint remain available.
 
 ## Depends On
 
